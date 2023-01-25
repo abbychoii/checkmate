@@ -7,7 +7,7 @@ const INITIAL_FORM_DATA = {
   frequency: "",
 };
 
-const AddDrugForm = ({ getRxCUIs }) => {
+const AddDrugForm = ({ getInteractions, getRxCUIs }) => {
   const [formData, setFormData] = useState([INITIAL_FORM_DATA]);
   // console.log(formData);
 
@@ -31,7 +31,7 @@ const AddDrugForm = ({ getRxCUIs }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    getRxCUIs(formData);
+    getInteractions(formData);
     // alert(JSON.stringify(formData));
   };
 
