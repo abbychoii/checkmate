@@ -9,36 +9,40 @@ function App() {
     interactions: [""],
   });
 
-  const getRxCUIs = async (formData) => {
-    console.log("getRxCUIs called");
-    // console.log(formData);
-    const newRxCUIs = [];
-    for (const drugInfo of formData) {
-      try {
-        let response = await axios.get(
-          `https://rxnav.nlm.nih.gov/REST/rxcui.json?name=${drugInfo.drug}`
-        );
-        console.log(response.data);
-        console.log(Object.keys(response.data.idGroup).length);
-        if (Object.keys(response.data.idGroup).length > 0) {
-          console.log(response.data.idGroup.rxnormId[0]);
-          newRxCUIs.push(response.data.idGroup.rxnormId[0]);
-        }
-      } catch (error) {
-        const errorMessage = `${drugInfo.drug} does not exist.`;
-        // console.log(errorMessage);
-        alert(errorMessage);
-      }
-    }
-    console.log(newRxCUIs);
-    return newRxCUIs;
-  };
+  // const getRxCUIs = async (formData) => {
+  //   console.log("getRxCUIs called");
+  //   // console.log(formData);
+  //   const newRxCUIs = [];
+  //   for (const drugInfo of formData) {
+  //     try {
+  //       let response = await axios.get(
+  //         `https://rxnav.nlm.nih.gov/REST/rxcui.json?name=${drugInfo.drug}`
+  //       );
+  //       console.log(response.data);
+  //       console.log(Object.keys(response.data.idGroup).length);
+  //       if (Object.keys(response.data.idGroup).length > 0) {
+  //         console.log(response.data.idGroup.rxnormId[0]);
+  //         newRxCUIs.push(response.data.idGroup.rxnormId[0]);
+  //       }
+  //     } catch (error) {
+  //       const errorMessage = `${drugInfo.drug} does not exist.`;
+  //       // console.log(errorMessage);
+  //       alert(errorMessage);
+  //     }
+  //   }
+  //   console.log(newRxCUIs);
+  //   return newRxCUIs;
+  // };
 
   const getInteractions = async (formData) => {
     console.log("getInteractions called");
     console.log(formData);
+    let rxCUICodes = [];
+    for (let idx in formData) {
+      rxCUICodes.push(formData[idx].rxCUI);
+    }
     const newInteractions = [];
-    let rxCUICodes = await getRxCUIs(formData);
+    // let rxCUICodes = await getRxCUIs(formData);
     try {
       const rxCUIsCode = rxCUICodes.join("+");
       let interactionURL = `https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=${rxCUIsCode}`;
