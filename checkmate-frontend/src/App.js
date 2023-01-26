@@ -1,12 +1,12 @@
 import AddDrugForm from "./components/AddDrugForm";
-// import Interactions from "./components/Interactions";
+import Interactions from "./components/Interactions";
 import axios from "axios";
 import { useState } from "react";
 
 function App() {
   const [currentData, setCurrentData] = useState({
-    rxCUIs: [],
-    interactions: [],
+    rxCUIs: [""],
+    interactions: [""],
   });
 
   const getRxCUIs = async (formData) => {
@@ -43,7 +43,7 @@ function App() {
       let interactionURL = `https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=${rxCUIsCode}`;
       axios.get(interactionURL).then((response) => {
         if ("fullInteractionTypeGroup" in response.data) {
-          const interactions = response.data.fullInteractionTypeGroup.length;
+          const interactions = response.data.fullInteractionTypeGroup;
           console.log(interactions);
           console.log(response.data);
           newInteractions.push(interactions);
@@ -57,7 +57,7 @@ function App() {
     }
     const newCurrentData = {
       rxCUIs: rxCUICodes,
-      interactions: newInteractions,
+      interactions: [newInteractions],
     };
     console.log(newCurrentData);
     setCurrentData(newCurrentData);
@@ -69,6 +69,10 @@ function App() {
         <h1>CheckMate</h1>
       </header>
       <AddDrugForm getInteractions={getInteractions}></AddDrugForm>
+      <Interactions
+        rxCUIs={currentData["rxCUIs"]}
+        interactions={currentData["interactions"]}
+      ></Interactions>
     </div>
   );
 }
