@@ -6,6 +6,7 @@ const INITIAL_FORM_DATA = {
   drug: "",
   dose: "",
   frequency: "",
+  rxCUI: "",
 };
 
 const AddDrugForm = ({ getInteractions }) => {
@@ -23,39 +24,29 @@ const AddDrugForm = ({ getInteractions }) => {
     setFormData(newFormData);
   };
 
-  const nameSuggestion = async (e) => {
-    let response = await axios.get(
-      `https://clinicaltables.nlm.nih.gov/api/rxterms/v3/search?terms=${e.target.value}&ef=STRENGTHS_AND_FORMS`
-    );
-    console.log(response.data);
-    try {
-      let suggestionsNameData = response.data[1];
-      setDrugSuggestions({
-        ...drugSuggestions,
-        drugNames: suggestionsNameData,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-    // console.log(suggestionsNameData);
-    // setDrugSuggestions({ ...drugSuggestions, drugName: suggestionsNameData });
-  };
-
-  const doseSuggestion = async (e) => {
-    // let suggestionsDoseData = [];
-    console.log("doseSuggestion has been called");
+  const getSuggestions = async (i, e) => {
     let response = await axios.get(
       `https://clinicaltables.nlm.nih.gov/api/rxterms/v3/search?terms=${e.target.value}&ef=STRENGTHS_AND_FORMS,RXCUIS`
     );
     console.log(response.data);
     try {
-      let doseSuggestions = response.data[2]["STRENGTHS_AND_FORMS"][0];
-      console.log(doseSuggestions);
-      // setDrugSuggestions([])
-      setDrugSuggestions({ ...drugSuggestions, doses: doseSuggestions });
+      let suggestionsNameData = response.data[1];
+      let suggestionDoseData = response.data[2]["STRENGTHS_AND_FORMS"][0];
+      // console.log(suggestionDoseData);
+      let suggestionRxCUIData = response.data[2]["RXCUIS"][0][0];
+      setDrugSuggestions({
+        drugNames: suggestionsNameData,
+        doses: suggestionDoseData,
+        rxCUIs: suggestionRxCUIData,
+      });
+      const newFormData = [...formData];
+      newFormData[i]["rxCUI"] = suggestionRxCUIData;
+      setFormData(newFormData);
     } catch (error) {
       console.log(error);
     }
+    // console.log(suggestionsNameData);
+    // setDrugSuggestions({ ...drugSuggestions, drugName: suggestionsNameData });
   };
 
   const addFormFields = () => {
@@ -76,6 +67,7 @@ const AddDrugForm = ({ getInteractions }) => {
       console.log(`drugName= ${drugName}`);
       newFormData.push({ ...formData[idx], drug: drugName });
     }
+
     getInteractions(newFormData);
     // alert(JSON.stringify(formData));
   };
@@ -91,17 +83,18 @@ const AddDrugForm = ({ getInteractions }) => {
               list="drug-name-suggestions"
               id="drug"
               name="drug"
-              // value={element.drug || ""}
+              value={element.drug || ""}
               placeholder="drug name"
-              onChange={(e) => handleChange(index, e).then(nameSuggestion(e))}
-              onClick={(e) => doseSuggestion(e)}
+              onChange={(e) =>
+                handleChange(index, e).then(getSuggestions(index, e))
+              }
             />
             <datalist id="drug-name-suggestions">
               {drugSuggestions.drugNames.map((suggestion, idx) => {
                 return <option key={idx} value={suggestion}></option>;
               })}
             </datalist>
-            {/* <label htmlFor="dose"> Dose:</label>
+            <label htmlFor="dose"> Dose:</label>
             <input
               type="search"
               list="dose-suggestions"
@@ -120,17 +113,7 @@ const AddDrugForm = ({ getInteractions }) => {
                   </option>
                 );
               })}
-            </datalist> */}
-            <label htmlFor="dose"> Dose:</label>
-            <select id="dose" onChange={(e) => handleChange(index, e)}>
-              {drugSuggestions.doses.map((suggestion, idx) => {
-                return (
-                  <option key={idx} value={suggestion}>
-                    {suggestion}
-                  </option>
-                );
-              })}
-            </select>
+            </datalist>
             <label htmlFor="freq"> Frequency:</label>
             <input
               type="text"
