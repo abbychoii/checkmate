@@ -8,7 +8,7 @@ const INITIAL_FORM_DATA = {
   frequency: "",
 };
 
-const AddDrugForm = ({ getInteractions, getRxCUIs }) => {
+const AddDrugForm = ({ getInteractions }) => {
   const [formData, setFormData] = useState([INITIAL_FORM_DATA]);
   const [suggestions, setSuggestions] = useState([]);
   // console.log(formData);

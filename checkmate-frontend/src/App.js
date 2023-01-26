@@ -1,4 +1,5 @@
 import AddDrugForm from "./components/AddDrugForm";
+// import Interactions from "./components/Interactions";
 import axios from "axios";
 import { useState } from "react";
 
@@ -29,10 +30,7 @@ function App() {
         alert(errorMessage);
       }
     }
-    const newCurrentData = { ...currentData, rxCUIs: newRxCUIs };
-    console.log(newCurrentData);
     console.log(newRxCUIs);
-    setCurrentData(newCurrentData);
     return newRxCUIs;
   };
 
@@ -57,7 +55,10 @@ function App() {
     } catch (error) {
       console.log(error);
     }
-    const newCurrentData = { ...currentData, interactions: newInteractions };
+    const newCurrentData = {
+      rxCUIs: rxCUICodes,
+      interactions: newInteractions,
+    };
     console.log(newCurrentData);
     setCurrentData(newCurrentData);
   };
@@ -67,10 +68,7 @@ function App() {
       <header>
         <h1>CheckMate</h1>
       </header>
-      <AddDrugForm
-        getInteractions={getInteractions}
-        getRxCUIs={getRxCUIs}
-      ></AddDrugForm>
+      <AddDrugForm getInteractions={getInteractions}></AddDrugForm>
     </div>
   );
 }
