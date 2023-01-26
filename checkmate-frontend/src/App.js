@@ -36,6 +36,7 @@ function App() {
 
   const getInteractions = async (formData) => {
     console.log("getInteractions called");
+    console.log(formData);
     const newInteractions = [];
     let rxCUICodes = await getRxCUIs(formData);
     try {
