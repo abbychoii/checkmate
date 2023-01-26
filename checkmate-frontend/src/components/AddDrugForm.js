@@ -15,7 +15,9 @@ const AddDrugForm = ({ getInteractions }) => {
     drugNames: [],
     doses: [],
     rxCUIs: [],
+    only: false,
   });
+
   const handleChange = async (i, e) => {
     let newFormData = [...formData];
     // console.log(e);
@@ -30,18 +32,15 @@ const AddDrugForm = ({ getInteractions }) => {
     );
     console.log(response.data);
     try {
-      let suggestionsNameData = response.data[1];
-      let suggestionDoseData = response.data[2]["STRENGTHS_AND_FORMS"][0];
+      const newDrugSuggestions = { ...drugSuggestions };
+      if (response.data[0] === 1) {
+        newDrugSuggestions["only"] = true;
+      }
+      newDrugSuggestions["drugNames"] = response.data[1];
+      newDrugSuggestions["doses"] = response.data[2]["STRENGTHS_AND_FORMS"][0];
+      newDrugSuggestions["rxCUIs"] = response.data[2]["RXCUIS"][0];
       // console.log(suggestionDoseData);
-      let suggestionRxCUIData = response.data[2]["RXCUIS"][0][0];
-      setDrugSuggestions({
-        drugNames: suggestionsNameData,
-        doses: suggestionDoseData,
-        rxCUIs: suggestionRxCUIData,
-      });
-      const newFormData = [...formData];
-      newFormData[i]["rxCUI"] = suggestionRxCUIData;
-      setFormData(newFormData);
+      setDrugSuggestions(newDrugSuggestions);
     } catch (error) {
       console.log(error);
     }
@@ -49,8 +48,29 @@ const AddDrugForm = ({ getInteractions }) => {
     // setDrugSuggestions({ ...drugSuggestions, drugName: suggestionsNameData });
   };
 
+  const findRxCUI = (i) => {
+    if (drugSuggestions.only) {
+      for (let idx in drugSuggestions.doses) {
+        if (drugSuggestions.doses[idx] === formData[i].dose) {
+          const newFormData = [...formData];
+          newFormData[i].rxCUI = drugSuggestions.rxCUIs[idx];
+          setFormData(newFormData);
+        }
+      }
+    }
+  };
+
   const addFormFields = () => {
-    setFormData([...formData, { drug: "", dose: "", frequency: "" }]);
+    const i = formData.length - 1;
+    if (formData[i].drug && formData[i].dose) {
+      setDrugSuggestions({
+        drugNames: [],
+        doses: [],
+        rxCUIs: [],
+        only: false,
+      });
+      setFormData([...formData, { drug: "", dose: "", frequency: "" }]);
+    }
   };
 
   const removeFormData = (i) => {
@@ -77,7 +97,7 @@ const AddDrugForm = ({ getInteractions }) => {
       {formData.map((element, index) => {
         return (
           <div className="inline-form" key={index}>
-            <label htmlFor="drug"> Drug Name:</label>
+            <label htmlFor="drug"> Drug Name*:</label>
             <input
               type="search"
               list="drug-name-suggestions"
@@ -88,13 +108,14 @@ const AddDrugForm = ({ getInteractions }) => {
               onChange={(e) =>
                 handleChange(index, e).then(getSuggestions(index, e))
               }
+              required={true}
             />
             <datalist id="drug-name-suggestions">
               {drugSuggestions.drugNames.map((suggestion, idx) => {
                 return <option key={idx} value={suggestion}></option>;
               })}
             </datalist>
-            <label htmlFor="dose"> Dose:</label>
+            <label htmlFor="dose"> Dose*:</label>
             <input
               type="search"
               list="dose-suggestions"
@@ -102,8 +123,8 @@ const AddDrugForm = ({ getInteractions }) => {
               name="dose"
               value={element.dose || ""}
               placeholder="dose"
-              onChange={(e) => handleChange(index, e)}
-              // disabled="disabled"
+              onChange={(e) => handleChange(index, e).then(findRxCUI(index))}
+              required={true}
             />
             <datalist id="dose-suggestions">
               {drugSuggestions.doses.map((suggestion, idx) => {
@@ -135,7 +156,16 @@ const AddDrugForm = ({ getInteractions }) => {
           </div>
         );
       })}
-      <button type="button" onClick={() => addFormFields()}>
+      <button
+        type="button"
+        onClick={() => addFormFields()}
+        disabled={
+          formData[formData.length - 1]["drug"] &&
+          formData[formData.length - 1]["dose"]
+            ? false
+            : true
+        }
+      >
         Add Drug
       </button>
       <input type="submit" value="Check Interactions" onClick={handleSubmit} />
