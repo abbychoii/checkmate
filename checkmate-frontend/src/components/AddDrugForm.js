@@ -12,9 +12,9 @@ const INITIAL_FORM_DATA = {
 const AddDrugForm = ({ getInteractions }) => {
   const [formData, setFormData] = useState([INITIAL_FORM_DATA]);
   const [drugSuggestions, setDrugSuggestions] = useState({
-    drugNames: [],
-    doses: [],
-    rxCUIs: [],
+    drugNames: [""],
+    doses: [""],
+    rxCUIs: [""],
     only: false,
   });
 
@@ -62,14 +62,19 @@ const AddDrugForm = ({ getInteractions }) => {
 
   const addFormFields = () => {
     const i = formData.length - 1;
-    if (formData[i].drug && formData[i].dose) {
+    if (
+      drugSuggestions.drugNames.includes(formData[i].drug) &&
+      drugSuggestions.doses.includes(formData[i].dose)
+    ) {
+      setFormData([...formData, { drug: "", dose: "", frequency: "" }]);
       setDrugSuggestions({
-        drugNames: [],
-        doses: [],
-        rxCUIs: [],
+        drugNames: [""],
+        doses: [""],
+        rxCUIs: [""],
         only: false,
       });
-      setFormData([...formData, { drug: "", dose: "", frequency: "" }]);
+    } else {
+      alert("Invalid Drug Name was entered.");
     }
   };
 
@@ -87,9 +92,31 @@ const AddDrugForm = ({ getInteractions }) => {
       console.log(`drugName= ${drugName}`);
       newFormData.push({ ...formData[idx], drug: drugName });
     }
-
     getInteractions(newFormData);
-    // alert(JSON.stringify(formData));
+  };
+
+  const disableDose = (index) => {
+    if (
+      drugSuggestions.drugNames.includes(formData[index].drug) &&
+      formData[index].drug
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+  const disableSubmit = () => {
+    const i = formData.length - 1;
+    if (
+      drugSuggestions.drugNames.includes(formData[i].drug) &&
+      drugSuggestions.doses.includes(formData[i].dose) &&
+      formData.length > 1
+      // formData[i].drug &&
+      // formData[i].dose
+    ) {
+      return false;
+    }
+    return true;
   };
 
   return (
@@ -125,6 +152,7 @@ const AddDrugForm = ({ getInteractions }) => {
               placeholder="dose"
               onChange={(e) => handleChange(index, e).then(findRxCUI(index))}
               required={true}
+              disabled={disableDose(index)}
             />
             <datalist id="dose-suggestions">
               {drugSuggestions.doses.map((suggestion, idx) => {
@@ -135,6 +163,22 @@ const AddDrugForm = ({ getInteractions }) => {
                 );
               })}
             </datalist>
+            {/* <label htmlFor="dose">Dose*:</label>
+            <select
+              name="dose"
+              onChange={(e) => handleChange(index, e).then(findRxCUI(index))}
+              required={true}
+              // disabled={disableDose(index)}
+              placeholder="dose"
+            >
+              {drugSuggestions.doses.map((suggestion, idx) => {
+                return (
+                  <option key={idx} value={suggestion}>
+                    {suggestion}
+                  </option>
+                );
+              })}
+            </select> */}
             <label htmlFor="freq"> Frequency:</label>
             <input
               type="text"
@@ -168,7 +212,12 @@ const AddDrugForm = ({ getInteractions }) => {
       >
         Add Drug
       </button>
-      <input type="submit" value="Check Interactions" onClick={handleSubmit} />
+      <input
+        type="submit"
+        value="Check Interactions"
+        onClick={handleSubmit}
+        disabled={disableSubmit()}
+      />
     </form>
   );
 };

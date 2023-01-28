@@ -35,7 +35,7 @@ function App() {
     }
     const newCurrentData = {
       rxCUIs: rxCUICodes,
-      interactions: [newInteractions],
+      interactions: newInteractions,
     };
     console.log(newCurrentData);
     setCurrentData(newCurrentData);
