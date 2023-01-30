@@ -27,8 +27,9 @@ function App() {
         console.log(response.data);
         newInteractions.push(interactions);
       } else {
-        const disclaimer = "disclaimer :)";
+        const disclaimer = response.data.nlmDisclaimer;
         console.log(disclaimer);
+        newInteractions.push([disclaimer]);
       }
     } catch (error) {
       console.log(error);
