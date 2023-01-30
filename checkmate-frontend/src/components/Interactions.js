@@ -1,10 +1,12 @@
 // import DrugBank from "./DrugBank";
 import DrugBankList from "./DrugBankList";
-import OncHigh from "./OncHigh";
+import OncHighList from "./OncHighList";
 
 const Interactions = ({ rxCUIs, interactions }) => {
   console.log(rxCUIs);
+  console.log(interactions);
   console.log(interactions[0]);
+  console.log(interactions[0][0]);
 
   const interactionDataDisplay = () => {
     if (typeof interactions[0][0] === "string") {
@@ -12,6 +14,9 @@ const Interactions = ({ rxCUIs, interactions }) => {
     } else {
       return (
         <ul>
+          {interactions[0].length < 2 ? null : (
+            <OncHighList interactions={interactions}></OncHighList>
+          )}
           <DrugBankList interactions={interactions}></DrugBankList>
         </ul>
       );

@@ -31,14 +31,30 @@ const AddDrugForm = ({ getInteractions }) => {
       `https://clinicaltables.nlm.nih.gov/api/rxterms/v3/search?terms=${e.target.value}&ef=STRENGTHS_AND_FORMS,RXCUIS`
     );
     console.log(response.data);
+    console.log(formData[i].drug);
     try {
       const newDrugSuggestions = { ...drugSuggestions };
       if (response.data[0] === 1) {
         newDrugSuggestions["only"] = true;
+        newDrugSuggestions["doses"] =
+          response.data[2]["STRENGTHS_AND_FORMS"][0];
+        newDrugSuggestions["rxCUIs"] = response.data[2]["RXCUIS"][0];
+      } else if (response.data[1].includes(formData[i].drug)) {
+        console.log("met else if");
+        for (let idx in response.data[1]) {
+          console.log(formData[i].drug);
+          if (response.data[1][idx] === formData[i].drug) {
+            newDrugSuggestions["drugNames"] = [response.data[1][idx]];
+            newDrugSuggestions["doses"] =
+              response.data[2]["STRENGTHS_AND_FORMS"][idx];
+            newDrugSuggestions["rxCUIs"] = response.data[2]["RXCUIS"][idx];
+            newDrugSuggestions["only"] = true;
+          }
+        }
+      } else {
+        newDrugSuggestions["drugNames"] = response.data[1];
       }
-      newDrugSuggestions["drugNames"] = response.data[1];
-      newDrugSuggestions["doses"] = response.data[2]["STRENGTHS_AND_FORMS"][0];
-      newDrugSuggestions["rxCUIs"] = response.data[2]["RXCUIS"][0];
+      console.log(newDrugSuggestions);
       // console.log(suggestionDoseData);
       setDrugSuggestions(newDrugSuggestions);
     } catch (error) {

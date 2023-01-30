@@ -6,11 +6,11 @@ const OncHigh = ({ interactions, id }) => {
   const comment = interaction.comment;
   const drug1 =
     interaction.interactionPair[0].interactionConcept[0].sourceConceptItem;
-  const drug1Name = drug1.name;
+  const drug1Name = drug1.name.charAt(0).toUpperCase() + drug1.name.slice(1);
   const drug1Link = drug1.url;
   const drug2 =
     interaction.interactionPair[0].interactionConcept[1].sourceConceptItem;
-  const drug2Name = drug2.name;
+  const drug2Name = drug2.name.charAt(0).toUpperCase() + drug2.name.slice(1);
   const drug2Link = drug2.url;
   const description = interaction.interactionPair[0].description;
   const severity = interaction.interactionPair[0].severity;

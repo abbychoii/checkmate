@@ -12,7 +12,10 @@ const OncHighList = ({ interactions }) => {
   return (
     <div>
       <li>Source Name: {data.sourceName}</li>
-      <li>Source Disclaimer: {data.sourceDisclaimer}</li>
+      <li>
+        Source Disclaimer:{" "}
+        <a href={data.sourceDisclaimer}>{data.sourceDisclaimer} </a>
+      </li>
       {OncHighComponents}
     </div>
   );
