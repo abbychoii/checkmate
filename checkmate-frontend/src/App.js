@@ -7,14 +7,26 @@ function App() {
   const [currentData, setCurrentData] = useState({
     rxCUIs: [""],
     interactions: [""],
+    doses: [""],
+    drugs: [""],
+    frequencies: [""],
   });
 
   const getInteractions = async (formData) => {
     console.log("getInteractions called");
     // console.log(formData);
-    let rxCUICodes = [];
+    const rxCUICodes = [];
+    const drugs = [];
+    const doses = [];
+    const frequencies = [];
     for (let idx in formData) {
       rxCUICodes.push(formData[idx].rxCUI);
+      let drugName =
+        formData[idx].drug.charAt(0).toUpperCase() +
+        formData[idx].drug.slice(1);
+      drugs.push(drugName);
+      doses.push(formData[idx].dose);
+      frequencies.push(formData[idx].frequency);
     }
     const newInteractions = [];
     const rxCUIsCode = rxCUICodes.join("+");
@@ -37,6 +49,9 @@ function App() {
     const newCurrentData = {
       rxCUIs: rxCUICodes,
       interactions: newInteractions,
+      drugs: drugs,
+      doses: doses,
+      frequencies: frequencies,
     };
     console.log(newCurrentData);
     setCurrentData(newCurrentData);
@@ -49,8 +64,12 @@ function App() {
       </header>
       <AddDrugForm getInteractions={getInteractions}></AddDrugForm>
       <Interactions
-        rxCUIs={currentData["rxCUIs"]}
-        interactions={currentData["interactions"]}
+        currentData={currentData}
+        // drugs={currentData["drugs"]}
+        // doses={currentData["doses"]}
+        // frequencies={currentData["frequencies"]}
+        // rxCUIs={currentData["rxCUIs"]}
+        // interactions={currentData["interactions"]}
       ></Interactions>
     </div>
   );

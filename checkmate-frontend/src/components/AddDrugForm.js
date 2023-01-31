@@ -109,6 +109,7 @@ const AddDrugForm = ({ getInteractions }) => {
       console.log(`drugName= ${drugName}`);
       newFormData.push({ ...formData[idx], drug: drugName });
     }
+    console.log(newFormData);
     getInteractions(newFormData);
   };
 

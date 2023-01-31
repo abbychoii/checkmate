@@ -11,12 +11,14 @@ const OncHighList = ({ interactions }) => {
   }
   return (
     <div>
-      <li>Source Name: {data.sourceName}</li>
-      <li>
-        Source Disclaimer:{" "}
-        <a href={data.sourceDisclaimer}>{data.sourceDisclaimer} </a>
-      </li>
-      {OncHighComponents}
+      <ul>
+        <li>Source Name: {data.sourceName}</li>
+        <li>
+          Source Disclaimer:{" "}
+          <a href={data.sourceDisclaimer}>{data.sourceDisclaimer} </a>
+        </li>
+        {OncHighComponents}
+      </ul>
     </div>
   );
 };

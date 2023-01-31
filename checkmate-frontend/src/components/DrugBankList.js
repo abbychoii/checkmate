@@ -11,9 +11,11 @@ function DrugBankList({ interactions }) {
   }
   return (
     <div>
-      <li>Source Name: {data.sourceName}</li>
-      <li>Source Disclaimer: {data.sourceDisclaimer}</li>
-      {drugBankComponents}
+      <ul>
+        <li>Source Name: {data.sourceName}</li>
+        <li>Source Disclaimer: {data.sourceDisclaimer}</li>
+        {drugBankComponents}
+      </ul>
     </div>
   );
 }
