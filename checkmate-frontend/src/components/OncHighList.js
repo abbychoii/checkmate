@@ -4,6 +4,7 @@ import OncHigh from "./OncHigh";
 const OncHighList = ({ interactions }) => {
   const OncHighComponents = [];
   const data = interactions[0][1];
+  console.log(data);
   for (let i in data.fullInteractionType) {
     OncHighComponents.push(
       <OncHigh key={i} id={i} interactions={interactions}></OncHigh>

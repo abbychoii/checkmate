@@ -2,15 +2,15 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 
-const INITIAL_FORM_DATA = {
-  drug: "",
-  dose: "",
-  frequency: "",
-  rxCUI: "",
-};
-
 const AddDrugForm = ({ getInteractions }) => {
-  const [formData, setFormData] = useState([INITIAL_FORM_DATA]);
+  const [formData, setFormData] = useState([
+    {
+      drug: "",
+      dose: "",
+      frequency: "",
+      rxCUI: "",
+    },
+  ]);
   const [drugSuggestions, setDrugSuggestions] = useState({
     drugNames: [""],
     doses: [""],
@@ -88,10 +88,6 @@ const AddDrugForm = ({ getInteractions }) => {
       doses: [""],
       rxCUIs: [""],
       only: false,
-      //   });
-      // } else {
-      //   alert("Invalid Drug Name was entered.");
-      // }
     });
   };
 
@@ -101,8 +97,8 @@ const AddDrugForm = ({ getInteractions }) => {
     setFormData(newFormData);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const newFormData = [];
     for (let idx in formData) {
       const drugName = formData[idx]["drug"].split(" (")[0].toLowerCase();
@@ -111,6 +107,20 @@ const AddDrugForm = ({ getInteractions }) => {
     }
     console.log(newFormData);
     getInteractions(newFormData);
+    setFormData([
+      {
+        drug: "",
+        dose: "",
+        frequency: "",
+        rxCUI: "",
+      },
+    ]);
+    setDrugSuggestions({
+      drugNames: [""],
+      doses: [""],
+      rxCUIs: [""],
+      only: false,
+    });
   };
 
   // const disableDose = (index) => {
