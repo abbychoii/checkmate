@@ -155,6 +155,7 @@ const AddDrugForm = ({ getInteractions }) => {
                 handleChange(index, e).then(getSuggestions(index, e))
               }
               required={true}
+              disabled={index === formData.length - 1 ? false : true}
             />
             <datalist id="drug-name-suggestions">
               {drugSuggestions.drugNames.map((suggestion, idx) => {
@@ -171,7 +172,7 @@ const AddDrugForm = ({ getInteractions }) => {
               placeholder="dose"
               onChange={(e) => handleChange(index, e).then(findRxCUI(index))}
               required={true}
-              // disabled={disableDose(index)}
+              disabled={index === formData.length - 1 ? false : true}
             />
             <datalist id="dose-suggestions">
               {drugSuggestions.doses.map((suggestion, idx) => {
@@ -206,8 +207,9 @@ const AddDrugForm = ({ getInteractions }) => {
               value={element.frequency || ""}
               placeholder="frequency"
               onChange={(e) => handleChange(index, e)}
+              disabled={index === formData.length - 1 ? false : true}
             />
-            {index ? (
+            {index || formData.length > 1 ? (
               <button
                 type="button"
                 className="button remove"
@@ -235,7 +237,11 @@ const AddDrugForm = ({ getInteractions }) => {
         type="submit"
         value="Check Interactions"
         onClick={handleSubmit}
-        disabled={formData.length < 2}
+        disabled={
+          formData.length < 2 ||
+          !formData[formData.length - 1].drug ||
+          !formData[formData.length - 1].dose
+        }
       />
     </form>
   );
