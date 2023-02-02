@@ -58,19 +58,10 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header>
-        <h1>CheckMate</h1>
-      </header>
+    <div>
+      <h1 className="">CheckMate</h1>
       <AddDrugForm getInteractions={getInteractions}></AddDrugForm>
-      <Interactions
-        currentData={currentData}
-        // drugs={currentData["drugs"]}
-        // doses={currentData["doses"]}
-        // frequencies={currentData["frequencies"]}
-        // rxCUIs={currentData["rxCUIs"]}
-        // interactions={currentData["interactions"]}
-      ></Interactions>
+      <Interactions currentData={currentData}></Interactions>
     </div>
   );
 }

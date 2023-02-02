@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import SearchableDropdown from "./SearchableDropdown";
 
 const AddDrugForm = ({ getInteractions }) => {
   const [formData, setFormData] = useState([
@@ -11,6 +12,7 @@ const AddDrugForm = ({ getInteractions }) => {
       rxCUI: "",
     },
   ]);
+  // const [value, setValue] = useState("Type or Select option...");
   const [drugSuggestions, setDrugSuggestions] = useState({
     drugNames: [""],
     doses: [""],
@@ -60,8 +62,6 @@ const AddDrugForm = ({ getInteractions }) => {
     } catch (error) {
       console.log(error);
     }
-    // console.log(suggestionsNameData);
-    // setDrugSuggestions({ ...drugSuggestions, drugName: suggestionsNameData });
   };
 
   const findRxCUI = (i) => {
@@ -77,18 +77,18 @@ const AddDrugForm = ({ getInteractions }) => {
   };
 
   const addFormFields = () => {
-    // const i = formData.length - 1;
-    // if (
-    //   drugSuggestions.drugNames.includes(formData[i].drug) &&
-    //   drugSuggestions.doses.includes(formData[i].dose)
-    // ) {
-    setFormData([...formData, { drug: "", dose: "", frequency: "" }]);
-    setDrugSuggestions({
-      drugNames: [""],
-      doses: [""],
-      rxCUIs: [""],
-      only: false,
-    });
+    const index = formData.length - 1;
+    if (formData[index].dose && formData[index].drug) {
+      setFormData([...formData, { drug: "", dose: "", frequency: "" }]);
+      setDrugSuggestions({
+        drugNames: [""],
+        doses: [""],
+        rxCUIs: [""],
+        only: false,
+      });
+    } else {
+      alert("Drug Name and Dose are Required");
+    }
   };
 
   const removeFormData = (i) => {
@@ -99,130 +99,111 @@ const AddDrugForm = ({ getInteractions }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newFormData = [];
-    for (let idx in formData) {
-      const drugName = formData[idx]["drug"].split(" (")[0].toLowerCase();
-      console.log(`drugName= ${drugName}`);
-      newFormData.push({ ...formData[idx], drug: drugName });
+    if (formData.length < 2) {
+      alert("More than 1 Drug is Necessary to Check Interactions");
+    } else if (
+      !formData[formData.length - 1].drug ||
+      !formData[formData.length - 1].dose
+    ) {
+      alert("Drug Name and Dose are Required to Check Interactions");
+    } else {
+      const newFormData = [];
+      for (let idx in formData) {
+        const drugName = formData[idx]["drug"].split(" (")[0].toLowerCase();
+        console.log(`drugName= ${drugName}`);
+        newFormData.push({ ...formData[idx], drug: drugName });
+      }
+      console.log(newFormData);
+      getInteractions(newFormData);
+      setFormData([
+        {
+          drug: "",
+          dose: "",
+          frequency: "",
+          rxCUI: "",
+        },
+      ]);
+      setDrugSuggestions({
+        drugNames: [""],
+        doses: [""],
+        rxCUIs: [""],
+        only: false,
+      });
     }
-    console.log(newFormData);
-    getInteractions(newFormData);
-    setFormData([
-      {
-        drug: "",
-        dose: "",
-        frequency: "",
-        rxCUI: "",
-      },
-    ]);
-    setDrugSuggestions({
-      drugNames: [""],
-      doses: [""],
-      rxCUIs: [""],
-      only: false,
-    });
   };
 
-  // const disableDose = (index) => {
-  //   if (
-  //     drugSuggestions.drugNames.includes(formData[index].drug) &&
-  //     formData[index].drug
-  //   ) {
-  //     return false;
-  //   } else {
-  //     return true;
-  //   }
-  // };
+  const handleDropdownChange = async (i, e, type) => {
+    const response = await handleDropdown(i, e, type);
+    try {
+      getSuggestions(i, e);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  // const disableSubmit = () => {
-  //   const i = formData.length - 1;
-  //   if (
-  //     drugSuggestions.drugNames.includes(formData[i].drug) &&
-  //     drugSuggestions.doses.includes(formData[i].dose) &&
-  //     formData.length > 1
-  //     // formData[i].drug &&
-  //     // formData[i].dose
-  //   ) {
-  //     return false;
-  //   }
-  //   return true;
-  // };
+  const handleDropdown = (i, e, type) => {
+    const newFormData = [...formData];
+    console.log(type);
+    if (type === "drug") {
+      newFormData[i]["dose"] = "";
+    }
+    newFormData[i][type] = e.target.value;
+    setFormData(newFormData);
+
+    return e;
+  };
 
   return (
     <form>
       {formData.map((element, index) => {
         return (
-          <div className="inline-form" key={index}>
-            <label htmlFor="drug"> Drug Name*:</label>
-            <input
-              type="search"
-              list="drug-name-suggestions"
-              id="drug"
-              name="drug"
-              value={element.drug || ""}
-              placeholder="drug name"
-              onChange={(e) =>
-                handleChange(index, e).then(getSuggestions(index, e))
-              }
-              required={true}
-              disabled={index === formData.length - 1 ? false : true}
-            />
-            <datalist id="drug-name-suggestions">
-              {drugSuggestions.drugNames.map((suggestion, idx) => {
-                return <option key={idx} value={suggestion}></option>;
-              })}
-            </datalist>
-            <label htmlFor="dose"> Dose*:</label>
-            <input
-              type="search"
-              list="dose-suggestions"
-              id="dose"
-              name="dose"
-              value={element.dose || ""}
-              placeholder="dose"
-              onChange={(e) => handleChange(index, e).then(findRxCUI(index))}
-              required={true}
-              disabled={index === formData.length - 1 ? false : true}
-            />
-            <datalist id="dose-suggestions">
-              {drugSuggestions.doses.map((suggestion, idx) => {
-                return (
-                  <option key={idx} value={suggestion}>
-                    {suggestion}
-                  </option>
-                );
-              })}
-            </datalist>
-            {/* <label htmlFor="dose">Dose*:</label>
-            <select
-              name="dose"
-              onChange={(e) => handleChange(index, e).then(findRxCUI(index))}
-              required={true}
-              // disabled={disableDose(index)}
-              placeholder="dose"
-            >
-              {drugSuggestions.doses.map((suggestion, idx) => {
-                return (
-                  <option key={idx} value={suggestion}>
-                    {suggestion}
-                  </option>
-                );
-              })}
-            </select> */}
-            <label htmlFor="freq"> Frequency:</label>
-            <input
-              type="text"
-              id="freq"
-              name="frequency"
-              value={element.frequency || ""}
-              placeholder="frequency"
-              onChange={(e) => handleChange(index, e)}
-              disabled={index === formData.length - 1 ? false : true}
-            />
+          <div className="" key={index}>
+            <div className="">
+              <label htmlFor="drug">Drug: </label>
+              <SearchableDropdown
+                options={drugSuggestions.drugNames}
+                idx={index}
+                id="drug"
+                name="drug"
+                selectedVal={element.drug}
+                length={formData.length}
+                onDropdownChange={(e) => handleDropdownChange(index, e, "drug")}
+              ></SearchableDropdown>
+            </div>
+            <div className="">
+              <label htmlFor="dose">Dose: </label>
+              <SearchableDropdown
+                options={drugSuggestions.doses}
+                idx={index}
+                length={formData.length}
+                id="dose"
+                name="dose"
+                selectedVal={element.dose}
+                onDropdownChange={(e) =>
+                  handleDropdownChange(index, e, "dose").then(findRxCUI(index))
+                }
+              ></SearchableDropdown>
+            </div>
+            <div className="">
+              <label htmlFor="freq" className="">
+                Frequency
+                {<span className="">optional</span>} :
+              </label>
+              <input
+                className=""
+                type="text"
+                id="freq"
+                name="frequency"
+                value={element.frequency || ""}
+                placeholder="frequency"
+                onChange={(e) => handleChange(index, e)}
+                // disabled={index === formData.length - 1 ? false : true}
+              />
+            </div>
             {index || formData.length > 1 ? (
               <button
                 type="button"
-                className="button remove"
+                className=""
                 onClick={() => removeFormData(index)}
               >
                 X
@@ -231,28 +212,32 @@ const AddDrugForm = ({ getInteractions }) => {
           </div>
         );
       })}
+
       <button
+        className=""
         type="button"
         onClick={() => addFormFields()}
-        disabled={
-          formData[formData.length - 1]["drug"] &&
-          formData[formData.length - 1]["dose"]
-            ? false
-            : true
-        }
+        // disabled={
+        //   formData[formData.length - 1]["drug"] &&
+        //   formData[formData.length - 1]["dose"]
+        //     ? false
+        //     : true
+        // }
       >
         Add Drug
       </button>
       <input
+        className=""
         type="submit"
         value="Check Interactions"
         onClick={handleSubmit}
-        disabled={
-          formData.length < 2 ||
-          !formData[formData.length - 1].drug ||
-          !formData[formData.length - 1].dose
-        }
+        // disabled={
+        //   formData.length < 2 ||
+        //   !formData[formData.length - 1].drug ||
+        //   !formData[formData.length - 1].dose
+        // }
       />
+      <button className="">Button</button>
     </form>
   );
 };
