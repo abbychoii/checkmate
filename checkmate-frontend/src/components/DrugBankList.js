@@ -1,13 +1,18 @@
 // import Interactions from "./Interactions";
 import DrugBank from "./DrugBank";
 
-function DrugBankList({ interactions }) {
+function DrugBankList({ interactions, rxCUI }) {
   const drugBankComponents = [];
   const data = interactions[0][0];
   for (let i in data.fullInteractionType) {
-    drugBankComponents.push(
-      <DrugBank key={i} id={i} interactions={interactions}></DrugBank>
-    );
+    if (
+      data.fullInteractionType[i].minConcept[0].rxcui === rxCUI ||
+      data.fullInteractionType[i].minConcept[1].rxcui === rxCUI
+    ) {
+      drugBankComponents.push(
+        <DrugBank key={i} id={i} interactions={interactions}></DrugBank>
+      );
+    }
   }
   return (
     <div>

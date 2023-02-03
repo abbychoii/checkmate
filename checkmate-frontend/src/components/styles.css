@@ -4,6 +4,8 @@
 position: relative;
 color: #333;
 cursor: default;
+margin: 5px;
+padding: 5px;
 }
 
 .dropdown .arrow {
@@ -65,11 +67,15 @@ color: rgba(51, 51, 51, 0.8);
 cursor: pointer;
 display: block;
 padding: 8px 10px;
-}
 
+}
+.dropdown .selected-value input:disabled {
+    background-color: rgba(51, 51, 51, 0.232);
+    fill-opacity: .1;
+    font-style: italic;
+}
 .dropdown .option.selected,
 .dropdown .option:hover {
 background-color: #f2f9fc;
 color: #333;
 }
-  

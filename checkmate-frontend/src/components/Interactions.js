@@ -1,9 +1,7 @@
 // import DrugBank from "./DrugBank";
 import DrugBankList from "./DrugBankList";
 import OncHighList from "./OncHighList";
-import MedicationData from "./MedicationData";
-
-const Interactions = ({ currentData }) => {
+const Interactions = ({ currentData, rxCUI }) => {
   // console.log(rxCUIs);
   // console.log(interactions);
   // console.log(interactions[0]);
@@ -22,20 +20,31 @@ const Interactions = ({ currentData }) => {
         <>
           <h3>Interaction Data</h3>
           {currentData.interactions[0].length < 2 ? null : (
-            <OncHighList interactions={currentData.interactions}></OncHighList>
+            <OncHighList
+              interactions={currentData.interactions}
+              rxCUI={rxCUI}
+            ></OncHighList>
           )}
-          <DrugBankList interactions={currentData.interactions}></DrugBankList>
+          <DrugBankList
+            interactions={currentData.interactions}
+            rxCUI={rxCUI}
+          ></DrugBankList>
         </>
       );
     }
   };
 
   // const rxCUIStr = rxCUIs;
-  if (currentData.drugs[0]) {
+  if (
+    currentData.drugs[0] &&
+    typeof currentData.interactions[0][0] !== "string"
+  ) {
+    return <>{interactionDataDisplay()}</>;
+  } else {
     return (
       <>
-        <MedicationData currentData={currentData}></MedicationData>
-        {interactionDataDisplay()}
+        <h3>Interaction Data</h3>
+        <p>Disclaimer: {currentData.interactions[0][0]}</p>
       </>
     );
   }

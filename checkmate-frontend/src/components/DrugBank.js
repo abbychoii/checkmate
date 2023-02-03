@@ -20,25 +20,25 @@ const DrugBank = ({ interactions, id }) => {
   const severity = interaction.interactionPair[0].severity;
 
   return (
-    <ul className="interactionPairs" id={id}>
-      <li>Interaction Pair: </li>
-      <ul>
-        <li>
-          <a href={drug1Link}>{drug1Name}</a>
-        </li>
-        <li>
-          <a href={drug2Link}>{drug2Name}</a>
-        </li>
+    <div>
+      <ul key={`${id}-db`} className="interactionPairs" id={id}>
+        <li key={`${id}-db-header`}>Interaction Pair: </li>
+        <ul>
+          <li key={`${id}-db-drug1`}>
+            <a href={drug1Link}>{drug1Name}</a>
+          </li>
+          <li key={`${id}-db-drug2`}>
+            <a href={drug2Link}>{drug2Name}</a>
+          </li>
+        </ul>
+        <li key={`${id}-db-severity`}>Severity: {severity}</li>
+        <li key={`${id}-db-description`}>Description: {description}</li>
+        <li key={`${id}-db-comments`}>Drug Comments: {comment}</li>
+        <br></br>
       </ul>
-      <li>Severity: {severity}</li>
-      <li>Description: {description}</li>
-      <li>Drug Comments: {comment}</li>
-
-      <br></br>
-    </ul>
+    </div>
   );
-
-  // return <div>{interactionPairs}</div>;
 };
+// return <div>{interactionPairs}</div>;
 
 export default DrugBank;

@@ -21,19 +21,19 @@ const OncHigh = ({ interactions, id }) => {
 
   return (
     <div>
-      <ul className="interactionPairs" id={id}>
-        <li>Interaction Pair: </li>
+      <ul key={`${id}-oh`} className="interactionPairs" id={id}>
+        <li key={`${id}-oh-header`}>Interaction Pair: </li>
         <ul>
-          <li>
+          <li key={`${id}-oh-drug1`}>
             <a href={drug1Link}>{drug1Name}</a>
           </li>
-          <li>
+          <li key={`${id}-oh-drug2`}>
             <a href={drug2Link}>{drug2Name}</a>
           </li>
         </ul>
-        <li>Severity: {severity}</li>
-        <li>Description: {description}</li>
-        <li>Drug Comments: {comment}</li>
+        <li key={`${id}-oh-severity`}>Severity: {severity}</li>
+        <li key={`${id}-oh-description`}>Description: {description}</li>
+        <li key={`${id}-oh-comments`}>Drug Comments: {comment}</li>
         <br></br>
       </ul>
     </div>

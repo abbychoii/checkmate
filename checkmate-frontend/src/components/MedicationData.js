@@ -1,24 +1,22 @@
-const MedicationData = ({ currentData }) => {
-  return (
-    <div>
-      <h3>Medication Data</h3>
-      {currentData.drugs.map((drug, idx) => (
-        <ul key={`${idx}-drugData`}>
-          <li key={`${idx}-drug-rxcui`}>
-            {drug} (rxCUI: {currentData.rxCUIs[idx]})
-          </li>
-          <ul key={`${idx}-dose-freq`} className="dose-freq">
-            <li key={`${idx}-dose`}>Dose: {currentData.doses[idx]}</li>
-            {currentData.frequencies[idx] ? (
-              <li key={`${idx}-freq`}>
-                Frequency: {currentData.frequencies[idx]}
-              </li>
-            ) : null}
-          </ul>
-        </ul>
-      ))}
-    </div>
-  );
+import Medication from "./Medication";
+const MedicationData = ({ currentData, getDrugLabel }) => {
+  console.log(currentData);
+  if (currentData.drugs[0]) {
+    return (
+      <div>
+        <h2>Medication Data</h2>
+        {currentData.drugs.map((drug, idx) => (
+          <div>
+            <Medication
+              currentData={currentData}
+              getDrugLabel={getDrugLabel}
+              idx={idx}
+            ></Medication>
+          </div>
+        ))}
+      </div>
+    );
+  }
 };
 
 export default MedicationData;

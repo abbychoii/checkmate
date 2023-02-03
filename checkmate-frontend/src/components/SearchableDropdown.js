@@ -47,6 +47,8 @@ const SearchableDropdown = ({
               onDropdownChange(e);
             }}
             onClick={toggle}
+            placeholder={name}
+            maxLength={name === "dose" ? "0" : "20"}
           />
         </div>
         <div className={`arrow ${isOpen ? "open" : ""}`}></div>
