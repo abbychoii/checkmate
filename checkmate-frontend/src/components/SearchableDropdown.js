@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import "./styles.css";
+import "./SearchableDropdown.css";
 
 const SearchableDropdown = ({
   options,
