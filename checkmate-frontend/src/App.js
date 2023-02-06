@@ -10,7 +10,7 @@ function App() {
     interactions: [""],
     doses: [""],
     drugs: [""],
-    frequencies: [""],
+    frequencies: [""]
   });
   const [display, setDisplay] = useState(false);
   const getInteractions = async (formData) => {
@@ -52,7 +52,7 @@ function App() {
       interactions: newInteractions,
       drugs: drugs,
       doses: doses,
-      frequencies: frequencies,
+      frequencies: frequencies
     };
     console.log(newCurrentData);
     setCurrentData(newCurrentData);
@@ -71,7 +71,7 @@ function App() {
       // const stopUse = response.results[0].stop_use[0];
       return {
         //   purpose: purpose,
-        indicationUses: indicationUses,
+        indicationUses: indicationUses
         //   doNotUseWarning: doNotUseWarning,
         //   warnings: warnings,
         //   askDoc: askDoc,
@@ -83,25 +83,32 @@ function App() {
   };
 
   return (
-    <div>
-      <h1>CheckMate</h1>
-      <div className="blurb">
-        <h3>Welcome to CheckMate!</h3>
-        CheckMate aims to provide a place to search your medications or
-        medications of interest and see potential interactions and side effects.
-      </div>
-      <button className="btn" onClick={() => setDisplay(!display)}>
-        {display ? "Hide Medication CheckMate" : "Show Medication CheckMate"}
-      </button>
-      {display ? (
-        <div>
-          <AddDrugForm getInteractions={getInteractions}></AddDrugForm>
-          <MedicationData
-            currentData={currentData}
-            getDrugLabel={getDrugLabel}
-          ></MedicationData>
+    <div className="grid h-screen grid-cols-10 w-screen">
+      <div className="grid col-start-3 col-span-6 mt-20">
+        <div className="flex flex-col content-start">
+          <h1>CheckMate</h1>
+          <div className="blurb">
+            <h3>Welcome to CheckMate!</h3>
+            CheckMate aims to provide a place to search your medications or
+            medications of interest and see potential interactions and side
+            effects.
+          </div>
+          <button className="btn" onClick={() => setDisplay(!display)}>
+            {display
+              ? "Hide Medication CheckMate"
+              : "Show Medication CheckMate"}
+          </button>
+          {display ? (
+            <div>
+              <AddDrugForm getInteractions={getInteractions}></AddDrugForm>
+              <MedicationData
+                currentData={currentData}
+                getDrugLabel={getDrugLabel}
+              ></MedicationData>
+            </div>
+          ) : null}
         </div>
-      ) : null}
+      </div>
     </div>
   );
 }

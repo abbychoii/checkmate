@@ -10,15 +10,15 @@ const AddDrugForm = ({ getInteractions }) => {
       drug: "",
       dose: "",
       frequency: "",
-      rxCUI: "",
-    },
+      rxCUI: ""
+    }
   ]);
 
   const [drugSuggestions, setDrugSuggestions] = useState({
     drugNames: [""],
     doses: [""],
     rxCUIs: [""],
-    only: false,
+    only: false
   });
 
   const handleChange = async (i, e) => {
@@ -58,7 +58,7 @@ const AddDrugForm = ({ getInteractions }) => {
       } else {
         newDrugSuggestions = {
           ...drugSuggestions,
-          drugNames: response.data[1],
+          drugNames: response.data[1]
         };
       }
       console.log(newDrugSuggestions);
@@ -89,7 +89,7 @@ const AddDrugForm = ({ getInteractions }) => {
         drugNames: [""],
         doses: [""],
         rxCUIs: [""],
-        only: false,
+        only: false
       });
     } else {
       alert("Drug Name and Dose are Required");
@@ -125,14 +125,14 @@ const AddDrugForm = ({ getInteractions }) => {
           drug: "",
           dose: "",
           frequency: "",
-          rxCUI: "",
-        },
+          rxCUI: ""
+        }
       ]);
       setDrugSuggestions({
         drugNames: [""],
         doses: [""],
         rxCUIs: [""],
-        only: false,
+        only: false
       });
     }
   };
@@ -159,95 +159,101 @@ const AddDrugForm = ({ getInteractions }) => {
   };
 
   return (
-    <div className='drugForm'>
-      <form>
-        {formData.map((element, index) => {
-          return (
-            <div className='medData' key={index}>
-              <div className='info'>
-                {index === 0 ? (
-                  <label htmlFor='drug'>
-                    Drug {<span className='valid-req'> required</span>}
-                  </label>
-                ) : null}
-                <SearchableDropdown
-                  options={drugSuggestions.drugNames}
-                  idx={index}
-                  id='drug'
-                  name='drug'
-                  selectedVal={element.drug}
-                  length={formData.length}
-                  onDropdownChange={(e) =>
-                    handleDropdownChange(index, e, "drug")
-                  }
-                ></SearchableDropdown>
-              </div>
-              <div className='info'>
-                {index === 0 ? (
-                  <label htmlFor='dose'>
-                    Dose {<span className='valid-req'> required</span>}{" "}
-                  </label>
-                ) : null}
-                <SearchableDropdown
-                  options={drugSuggestions.doses}
-                  idx={index}
-                  length={formData.length}
-                  id='dose'
-                  name='dose'
-                  selectedVal={element.dose}
-                  onDropdownChange={(e) =>
-                    handleDropdownChange(index, e, "dose").then(
-                      findRxCUI(index)
-                    )
-                  }
-                ></SearchableDropdown>
-              </div>
-              <div className='info freq'>
-                {index === 0 ? (
-                  <label htmlFor='freq' className=''>
-                    Frequency
-                    {<span className='valid-opt'> optional</span>}
-                  </label>
-                ) : null}
-                <div className='inputContainer'>
-                  <input
-                    className='freqInput'
-                    type='text'
-                    id='freq'
-                    name='frequency'
-                    value={element.frequency || ""}
-                    placeholder='frequency'
-                    onChange={(e) => handleChange(index, e)}
-                    // disabled={index === formData.length - 1 ? false : true}
-                  />
+    <div className="grid justify-center">
+      <div className="drugForm">
+        <form>
+          {formData.map((element, index) => {
+            return (
+              <div className="medData" key={index}>
+                <div className="info">
+                  {index === 0 ? (
+                    <label htmlFor="drug">
+                      Drug {<span className="valid-req"> required</span>}
+                    </label>
+                  ) : null}
+                  <SearchableDropdown
+                    options={drugSuggestions.drugNames}
+                    idx={index}
+                    id="drug"
+                    name="drug"
+                    selectedVal={element.drug}
+                    length={formData.length}
+                    onDropdownChange={(e) =>
+                      handleDropdownChange(index, e, "drug")
+                    }
+                  ></SearchableDropdown>
                 </div>
-              </div>
-              {index || formData.length > 1 ? (
-                <div className='info'>
-                  <button
-                    type='button'
-                    className='btnX'
-                    onClick={() => removeFormData(index)}
-                  >
-                    {`Delete ${formData[index].drug}`}
-                  </button>
+                <div className="info">
+                  {index === 0 ? (
+                    <label htmlFor="dose">
+                      Dose {<span className="valid-req"> required</span>}{" "}
+                    </label>
+                  ) : null}
+                  <SearchableDropdown
+                    options={drugSuggestions.doses}
+                    idx={index}
+                    length={formData.length}
+                    id="dose"
+                    name="dose"
+                    selectedVal={element.dose}
+                    onDropdownChange={(e) =>
+                      handleDropdownChange(index, e, "dose").then(
+                        findRxCUI(index)
+                      )
+                    }
+                  ></SearchableDropdown>
                 </div>
-              ) : null}
-            </div>
-          );
-        })}
-        <div className='btnContainer'>
-          <button className='btn' type='button' onClick={() => addFormFields()}>
-            Add Drug
-          </button>
-          <input
-            className='btn'
-            type='submit'
-            value='Check Interactions'
-            onClick={handleSubmit}
-          />
-        </div>
-      </form>
+                <div className="info freq">
+                  {index === 0 ? (
+                    <label htmlFor="freq" className="">
+                      Frequency
+                      {<span className="valid-opt"> optional</span>}
+                    </label>
+                  ) : null}
+                  <div className="inputContainer">
+                    <input
+                      className="freqInput"
+                      type="text"
+                      id="freq"
+                      name="frequency"
+                      value={element.frequency || ""}
+                      placeholder="frequency"
+                      onChange={(e) => handleChange(index, e)}
+                      // disabled={index === formData.length - 1 ? false : true}
+                    />
+                  </div>
+                </div>
+                {index || formData.length > 1 ? (
+                  <div className="info">
+                    <button
+                      type="button"
+                      className="btnX"
+                      onClick={() => removeFormData(index)}
+                    >
+                      {`Delete ${formData[index].drug}`}
+                    </button>
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
+          <div className="btnContainer">
+            <button
+              className="btn"
+              type="button"
+              onClick={() => addFormFields()}
+            >
+              Add Drug
+            </button>
+            <input
+              className="btn"
+              type="submit"
+              value="Check Interactions"
+              onClick={handleSubmit}
+            />
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

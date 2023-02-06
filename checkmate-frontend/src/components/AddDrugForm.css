@@ -1,6 +1,6 @@
 
 .drugForm {
-    max-width: 100vw;
+    max-width: 50vw;
 }
 .medData {
     /* border: 2px black solid; */
@@ -55,17 +55,17 @@ label {
     outline: none;
     padding: 8px 50px 8px 10px;
     transition: all 200ms ease;
-    width: 140%;
+    width: 100%;
     }
     
 .info .freq {
-    margin: 5px;
-    padding: 5px;
+    margin: 0px;
+    padding: 0px;
 
 }
 .inputContainer {
-    margin: 5px;
-    padding:5px;
+    margin: 0px;
+    padding:0px;
 }
 
 .info {
