@@ -33,19 +33,20 @@ const AddDrugForm = ({ getInteractions }) => {
     let response = await axios.get(
       `https://clinicaltables.nlm.nih.gov/api/rxterms/v3/search?terms=${e.target.value}&ef=STRENGTHS_AND_FORMS,RXCUIS`
     );
-    console.log(response.data);
-    console.log(formData[i].drug);
+    // console.log(response.data);
+    // console.log(formData[i].drug);
     try {
-      const newDrugSuggestions = { ...drugSuggestions };
+      let newDrugSuggestions = {};
       if (response.data[0] === 1) {
+        newDrugSuggestions["drugNames"] = response.data[1];
         newDrugSuggestions["only"] = true;
         newDrugSuggestions["doses"] =
           response.data[2]["STRENGTHS_AND_FORMS"][0];
         newDrugSuggestions["rxCUIs"] = response.data[2]["RXCUIS"][0];
       } else if (response.data[1].includes(formData[i].drug)) {
-        console.log("met else if");
+        // console.log("met else if");
         for (let idx in response.data[1]) {
-          console.log(formData[i].drug);
+          // console.log(formData[i].drug);
           if (response.data[1][idx] === formData[i].drug) {
             newDrugSuggestions["drugNames"] = [response.data[1][idx]];
             newDrugSuggestions["doses"] =
@@ -55,7 +56,10 @@ const AddDrugForm = ({ getInteractions }) => {
           }
         }
       } else {
-        newDrugSuggestions["drugNames"] = response.data[1];
+        newDrugSuggestions = {
+          ...drugSuggestions,
+          drugNames: response.data[1],
+        };
       }
       console.log(newDrugSuggestions);
       // console.log(suggestionDoseData);
@@ -155,22 +159,22 @@ const AddDrugForm = ({ getInteractions }) => {
   };
 
   return (
-    <div className="drugForm">
+    <div className='drugForm'>
       <form>
         {formData.map((element, index) => {
           return (
-            <div className="medData" key={index}>
-              <div className="info">
+            <div className='medData' key={index}>
+              <div className='info'>
                 {index === 0 ? (
-                  <label htmlFor="drug">
-                    Drug {<span className="valid-req"> required</span>}
+                  <label htmlFor='drug'>
+                    Drug {<span className='valid-req'> required</span>}
                   </label>
                 ) : null}
                 <SearchableDropdown
                   options={drugSuggestions.drugNames}
                   idx={index}
-                  id="drug"
-                  name="drug"
+                  id='drug'
+                  name='drug'
                   selectedVal={element.drug}
                   length={formData.length}
                   onDropdownChange={(e) =>
@@ -178,18 +182,18 @@ const AddDrugForm = ({ getInteractions }) => {
                   }
                 ></SearchableDropdown>
               </div>
-              <div className="info">
+              <div className='info'>
                 {index === 0 ? (
-                  <label htmlFor="dose">
-                    Dose {<span className="valid-req"> required</span>}{" "}
+                  <label htmlFor='dose'>
+                    Dose {<span className='valid-req'> required</span>}{" "}
                   </label>
                 ) : null}
                 <SearchableDropdown
                   options={drugSuggestions.doses}
                   idx={index}
                   length={formData.length}
-                  id="dose"
-                  name="dose"
+                  id='dose'
+                  name='dose'
                   selectedVal={element.dose}
                   onDropdownChange={(e) =>
                     handleDropdownChange(index, e, "dose").then(
@@ -198,31 +202,31 @@ const AddDrugForm = ({ getInteractions }) => {
                   }
                 ></SearchableDropdown>
               </div>
-              <div className="info freq">
+              <div className='info freq'>
                 {index === 0 ? (
-                  <label htmlFor="freq" className="">
+                  <label htmlFor='freq' className=''>
                     Frequency
-                    {<span className="valid-opt"> optional</span>}
+                    {<span className='valid-opt'> optional</span>}
                   </label>
                 ) : null}
-                <div className="inputContainer">
+                <div className='inputContainer'>
                   <input
-                    className="freqInput"
-                    type="text"
-                    id="freq"
-                    name="frequency"
+                    className='freqInput'
+                    type='text'
+                    id='freq'
+                    name='frequency'
                     value={element.frequency || ""}
-                    placeholder="frequency"
+                    placeholder='frequency'
                     onChange={(e) => handleChange(index, e)}
                     // disabled={index === formData.length - 1 ? false : true}
                   />
                 </div>
               </div>
               {index || formData.length > 1 ? (
-                <div className="info">
+                <div className='info'>
                   <button
-                    type="button"
-                    className="btnX"
+                    type='button'
+                    className='btnX'
                     onClick={() => removeFormData(index)}
                   >
                     {`Delete ${formData[index].drug}`}
@@ -232,14 +236,14 @@ const AddDrugForm = ({ getInteractions }) => {
             </div>
           );
         })}
-        <div className="btnContainer">
-          <button className="btn" type="button" onClick={() => addFormFields()}>
+        <div className='btnContainer'>
+          <button className='btn' type='button' onClick={() => addFormFields()}>
             Add Drug
           </button>
           <input
-            className="btn"
-            type="submit"
-            value="Check Interactions"
+            className='btn'
+            type='submit'
+            value='Check Interactions'
             onClick={handleSubmit}
           />
         </div>
