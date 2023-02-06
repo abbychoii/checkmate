@@ -58,48 +58,45 @@ function App() {
     setCurrentData(newCurrentData);
   };
 
-  const getDrugLabel = async (rxCUI) => {
-    const URL = `https://api.fda.gov/drug/label.json?search=openfda.rxcui:${rxCUI}`;
-    // const warnings = []
-    const response = await axios.get(URL);
-    try {
-      // const purpose = response.results[0].purpose[0];
-      const indicationUses = response.results[0].indications_and_usage[0];
-      // const warnings = response.results[0].warnings[0];
-      // const doNotUseWarning = response.results[0].do_not_use[0];
-      // const askDoc = response.results[0].ask_doctor[0];
-      // const stopUse = response.results[0].stop_use[0];
-      return {
-        //   purpose: purpose,
-        indicationUses: indicationUses,
-        //   doNotUseWarning: doNotUseWarning,
-        //   warnings: warnings,
-        //   askDoc: askDoc,
-        //   stopUse: stopUse,
-      };
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getDrugLabel = async (rxCUI) => {
+  //   const URL = `https://api.fda.gov/drug/label.json?search=openfda.rxcui:${rxCUI}`;
+  //   // const warnings = []
+  //   const response = await axios.get(URL);
+  //   try {
+  //     // const purpose = response.results[0].purpose[0];
+  //     const indicationUses = response.results[0].indications_and_usage[0];
+  //     // const warnings = response.results[0].warnings[0];
+  //     // const doNotUseWarning = response.results[0].do_not_use[0];
+  //     // const askDoc = response.results[0].ask_doctor[0];
+  //     // const stopUse = response.results[0].stop_use[0];
+  //     return {
+  //       //   purpose: purpose,
+  //       indicationUses: indicationUses,
+  //       //   doNotUseWarning: doNotUseWarning,
+  //       //   warnings: warnings,
+  //       //   askDoc: askDoc,
+  //       //   stopUse: stopUse,
+  //     };
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div>
       <h1>CheckMate</h1>
-      <div className="blurb">
+      <div className='blurb'>
         <h3>Welcome to CheckMate!</h3>
         CheckMate aims to provide a place to search your medications or
         medications of interest and see potential interactions and side effects.
       </div>
-      <button className="btn" onClick={() => setDisplay(!display)}>
+      <button className='btn' onClick={() => setDisplay(!display)}>
         {display ? "Hide Medication CheckMate" : "Show Medication CheckMate"}
       </button>
       {display ? (
         <div>
           <AddDrugForm getInteractions={getInteractions}></AddDrugForm>
-          <MedicationData
-            currentData={currentData}
-            getDrugLabel={getDrugLabel}
-          ></MedicationData>
+          <MedicationData currentData={currentData}></MedicationData>
         </div>
       ) : null}
     </div>

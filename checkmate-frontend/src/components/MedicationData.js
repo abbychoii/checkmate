@@ -1,5 +1,5 @@
 import Medication from "./Medication";
-const MedicationData = ({ currentData, getDrugLabel }) => {
+const MedicationData = ({ currentData }) => {
   console.log(currentData);
   if (currentData.drugs[0]) {
     return (
@@ -7,11 +7,7 @@ const MedicationData = ({ currentData, getDrugLabel }) => {
         <h2>Medication Data</h2>
         {currentData.drugs.map((drug, idx) => (
           <div>
-            <Medication
-              currentData={currentData}
-              getDrugLabel={getDrugLabel}
-              idx={idx}
-            ></Medication>
+            <Medication currentData={currentData} idx={idx}></Medication>
           </div>
         ))}
       </div>
