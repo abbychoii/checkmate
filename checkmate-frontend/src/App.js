@@ -3,6 +3,8 @@ import MedicationData from "./components/MedicationData";
 import axios from "axios";
 import { useState } from "react";
 import "./App.css";
+import TitleBlock from "./components/styles/TitleBlock.styled";
+import { Popover } from "@headlessui/react";
 
 function App() {
   const [currentData, setCurrentData] = useState({
@@ -12,7 +14,7 @@ function App() {
     drugs: [""],
     frequencies: [""]
   });
-  const [display, setDisplay] = useState(false);
+  const [display, setDisplay] = useState(true);
   const getInteractions = async (formData) => {
     console.log("getInteractions called");
     // console.log(formData);
@@ -83,31 +85,24 @@ function App() {
   };
 
   return (
-    <div className="grid h-screen grid-cols-10 w-screen">
-      <div className="grid col-start-3 col-span-6 mt-20">
-        <div className="flex flex-col content-start">
-          <h1>CheckMate</h1>
-          <div className="blurb">
-            <h3>Welcome to CheckMate!</h3>
-            CheckMate aims to provide a place to search your medications or
-            medications of interest and see potential interactions and side
-            effects.
+    <div className="flex justify-center">
+      <div className="flex flex-col mt-20 mb border-2 h-max">
+        <TitleBlock />
+        <button
+          className="btn flex justify-end mx-10"
+          onClick={() => setDisplay(!display)}
+        >
+          {display ? "Hide Form" : "Show Form"}
+        </button>
+        {display ? (
+          <div className="flex">
+            <AddDrugForm getInteractions={getInteractions}></AddDrugForm>
           </div>
-          <button className="btn" onClick={() => setDisplay(!display)}>
-            {display
-              ? "Hide Medication CheckMate"
-              : "Show Medication CheckMate"}
-          </button>
-          {display ? (
-            <div>
-              <AddDrugForm getInteractions={getInteractions}></AddDrugForm>
-              <MedicationData
-                currentData={currentData}
-                getDrugLabel={getDrugLabel}
-              ></MedicationData>
-            </div>
-          ) : null}
-        </div>
+        ) : null}
+        <MedicationData
+          currentData={currentData}
+          getDrugLabel={getDrugLabel}
+        ></MedicationData>
       </div>
     </div>
   );

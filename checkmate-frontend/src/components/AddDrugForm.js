@@ -159,101 +159,100 @@ const AddDrugForm = ({ getInteractions }) => {
   };
 
   return (
-    <div className="grid justify-center">
-      <div className="drugForm">
-        <form>
-          {formData.map((element, index) => {
-            return (
-              <div className="medData" key={index}>
-                <div className="info">
-                  {index === 0 ? (
-                    <label htmlFor="drug">
-                      Drug {<span className="valid-req"> required</span>}
-                    </label>
-                  ) : null}
-                  <SearchableDropdown
-                    options={drugSuggestions.drugNames}
-                    idx={index}
-                    id="drug"
-                    name="drug"
-                    selectedVal={element.drug}
-                    length={formData.length}
-                    onDropdownChange={(e) =>
-                      handleDropdownChange(index, e, "drug")
-                    }
-                  ></SearchableDropdown>
-                </div>
-                <div className="info">
-                  {index === 0 ? (
-                    <label htmlFor="dose">
-                      Dose {<span className="valid-req"> required</span>}{" "}
-                    </label>
-                  ) : null}
-                  <SearchableDropdown
-                    options={drugSuggestions.doses}
-                    idx={index}
-                    length={formData.length}
-                    id="dose"
-                    name="dose"
-                    selectedVal={element.dose}
-                    onDropdownChange={(e) =>
-                      handleDropdownChange(index, e, "dose").then(
-                        findRxCUI(index)
-                      )
-                    }
-                  ></SearchableDropdown>
-                </div>
-                <div className="info freq">
-                  {index === 0 ? (
-                    <label htmlFor="freq" className="">
-                      Frequency
-                      {<span className="valid-opt"> optional</span>}
-                    </label>
-                  ) : null}
-                  <div className="inputContainer">
-                    <input
-                      className="freqInput"
-                      type="text"
-                      id="freq"
-                      name="frequency"
-                      value={element.frequency || ""}
-                      placeholder="frequency"
-                      onChange={(e) => handleChange(index, e)}
-                      // disabled={index === formData.length - 1 ? false : true}
-                    />
-                  </div>
-                </div>
-                {index || formData.length > 1 ? (
-                  <div className="info">
-                    <button
-                      type="button"
-                      className="btnX"
-                      onClick={() => removeFormData(index)}
-                    >
-                      {`Delete ${formData[index].drug}`}
-                    </button>
-                  </div>
+    <div className="drugForm flex flex-grow justify-evenly">
+      <form className="flex flex-col">
+        {formData.map((element, index) => {
+          return (
+            <div className="medData flex flex-row flex-grow" key={index}>
+              <div className="info">
+                {index === 0 ? (
+                  <label htmlFor="drug">
+                    Drug {<span className="valid-req"> required</span>}
+                  </label>
                 ) : null}
+                <SearchableDropdown
+                  options={drugSuggestions.drugNames}
+                  idx={index}
+                  id="drug"
+                  name="drug"
+                  selectedVal={element.drug}
+                  length={formData.length}
+                  onDropdownChange={(e) =>
+                    handleDropdownChange(index, e, "drug")
+                  }
+                ></SearchableDropdown>
               </div>
-            );
-          })}
-          <div className="btnContainer">
-            <button
-              className="btn"
-              type="button"
-              onClick={() => addFormFields()}
-            >
-              Add Drug
-            </button>
-            <input
-              className="btn"
-              type="submit"
-              value="Check Interactions"
-              onClick={handleSubmit}
-            />
-          </div>
-        </form>
-      </div>
+              <div className="info">
+                {index === 0 ? (
+                  <label htmlFor="dose">
+                    Dose {<span className="valid-req"> required</span>}{" "}
+                  </label>
+                ) : null}
+                <SearchableDropdown
+                  options={drugSuggestions.doses}
+                  idx={index}
+                  length={formData.length}
+                  id="dose"
+                  name="dose"
+                  selectedVal={element.dose}
+                  onDropdownChange={(e) =>
+                    handleDropdownChange(index, e, "dose").then(
+                      findRxCUI(index)
+                    )
+                  }
+                ></SearchableDropdown>
+              </div>
+              <div className="info freq">
+                {index === 0 ? (
+                  <label htmlFor="freq" className="">
+                    Frequency
+                    {<span className="valid-opt"> optional</span>}
+                  </label>
+                ) : null}
+                <div className="inputContainer">
+                  <input
+                    className="freqInput"
+                    type="text"
+                    id="freq"
+                    name="frequency"
+                    value={element.frequency || ""}
+                    placeholder="frequency"
+                    onChange={(e) => handleChange(index, e)}
+                    // disabled={index === formData.length - 1 ? false : true}
+                  />
+                </div>
+              </div>
+              {index || formData.length > 1 ? (
+                <div className="info flex content-center">
+                  <button
+                    type="button"
+                    className="btnX"
+                    onClick={() => removeFormData(index)}
+                  >
+                    {/* {`Delete ${formData[index].drug}`} */}
+                    {`x`}
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          );
+        })}
+        <div className="btnContainer flex flex-col justify-evenly my-5 gap-2">
+          <button
+            className="btn h-10 border-dashed border-2 border-opacity-20  border-gray-600 bg-gray-200 text-gray-700 font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-gray-300 hover:shadow-lg focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg transition duration-150 ease-in-out"
+            type="button"
+            onClick={() => addFormFields()}
+          >
+            Add Drug
+          </button>
+          <input
+            className="btn h-10 border-2 border-blue-400 bg-blue-400 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+            type="submit"
+            value="Check Interactions"
+            onClick={handleSubmit}
+          />
+        </div>
+      </form>
     </div>
   );
 };

@@ -3,10 +3,10 @@ const MedicationData = ({ currentData, getDrugLabel }) => {
   console.log(currentData);
   if (currentData.drugs[0]) {
     return (
-      <div>
+      <div className="flex flex-grow flex-col mx-10 border-2 mb-10 mt-10">
         <h2>Medication Data</h2>
         {currentData.drugs.map((drug, idx) => (
-          <div>
+          <div className="flex flex-grow flex-col">
             <Medication
               currentData={currentData}
               getDrugLabel={getDrugLabel}
