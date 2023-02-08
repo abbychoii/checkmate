@@ -4,7 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 import "./App.css";
 import TitleBlock from "./components/styles/TitleBlock.styled";
-import { Popover } from "@headlessui/react";
+import Navbar from "./components/styles/NavBar.styled";
 
 function App() {
   const [currentData, setCurrentData] = useState({
@@ -85,24 +85,27 @@ function App() {
   };
 
   return (
-    <div className="flex justify-center">
-      <div className="flex flex-col mt-20 mb border-2 h-max">
-        <TitleBlock />
-        <button
-          className="btn flex justify-end mx-10"
-          onClick={() => setDisplay(!display)}
-        >
-          {display ? "Hide Form" : "Show Form"}
-        </button>
-        {display ? (
-          <div className="flex">
-            <AddDrugForm getInteractions={getInteractions}></AddDrugForm>
-          </div>
-        ) : null}
-        <MedicationData
-          currentData={currentData}
-          getDrugLabel={getDrugLabel}
-        ></MedicationData>
+    <div>
+      <Navbar />
+      <div className=" flex mx-50 justify-center">
+        <div className="flex flex-col mt-20 mb border-2 h-max">
+          <TitleBlock />
+          <button
+            className="btn flex justify-end mx-10"
+            onClick={() => setDisplay(!display)}
+          >
+            {display ? "Hide Form" : "Show Form"}
+          </button>
+          {display ? (
+            <div className="flex">
+              <AddDrugForm getInteractions={getInteractions}></AddDrugForm>
+            </div>
+          ) : null}
+          <MedicationData
+            currentData={currentData}
+            getDrugLabel={getDrugLabel}
+          ></MedicationData>
+        </div>
       </div>
     </div>
   );
