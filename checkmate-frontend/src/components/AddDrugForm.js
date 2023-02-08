@@ -211,7 +211,7 @@ const AddDrugForm = ({ getInteractions }) => {
                 ) : null}
                 <div className="inputContainer flex flex-grow">
                   <input
-                    className="freqInput flex self-center border-2 h-8"
+                    className="freqInput flex self-center border-2 h-8 ml-3"
                     type="text"
                     id="freq"
                     name="frequency"

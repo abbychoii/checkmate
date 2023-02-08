@@ -20,7 +20,7 @@ function Medication({ currentData, getDrugLabel, idx }) {
               } h-5 w-5 text-purple-500`}
             />
           </Disclosure.Button>
-          <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+          <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500 border-2 max-w-[900px] self-center">
             <h3>{`${currentData.drugs[idx]}`}</h3>
             <h3>rxCUI: {currentData.rxCUIs[idx]}</h3>
             <p>Dose: {currentData.doses[idx]}</p>
