@@ -28,7 +28,7 @@ border-width: 0 5px 5px;
 }
 
 .dropdown .selected-value input {
-line-height: 1.5;
+line-height: 1;
 font-size: 1rem;
 background-color: #fff;
 border: 1px solid #ccc;
@@ -52,7 +52,7 @@ max-height: 200px;
 overflow-y: auto;
 position: absolute;
 top: 100%;
-width: 100%;
+width: 95%;
 z-index: 1000;
 -webkit-overflow-scrolling: touch;
 }

@@ -202,16 +202,16 @@ const AddDrugForm = ({ getInteractions }) => {
                   }
                 ></SearchableDropdown>
               </div>
-              <div className="info freq">
+              <div className="info freq flex min-h-full flex-col">
                 {index === 0 ? (
                   <label htmlFor="freq" className="">
                     Frequency
                     {<span className="valid-opt"> optional</span>}
                   </label>
                 ) : null}
-                <div className="inputContainer">
+                <div className="inputContainer flex flex-grow">
                   <input
-                    className="freqInput"
+                    className="freqInput flex self-center border-2 h-8"
                     type="text"
                     id="freq"
                     name="frequency"

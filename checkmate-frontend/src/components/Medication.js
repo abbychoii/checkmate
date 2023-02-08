@@ -12,7 +12,7 @@ function Medication({ currentData, getDrugLabel, idx }) {
     <Disclosure>
       {({ open }) => (
         <>
-          <Disclosure.Button className="flex flex-grow rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+          <Disclosure.Button className="flex rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
             <span>{currentData.drugs[idx]}</span>
             <ChevronUpIcon
               className={`${
