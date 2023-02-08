@@ -1,5 +1,5 @@
 import Medication from "./Medication";
-const MedicationData = ({ currentData, getDrugLabel }) => {
+const MedicationData = ({ currentData }) => {
   console.log(currentData);
   if (currentData.drugs[0]) {
     return (
@@ -8,8 +8,8 @@ const MedicationData = ({ currentData, getDrugLabel }) => {
         {currentData.drugs.map((drug, idx) => (
           <div className="flex flex-grow flex-col">
             <Medication
+              key={idx}
               currentData={currentData}
-              getDrugLabel={getDrugLabel}
               idx={idx}
             ></Medication>
           </div>

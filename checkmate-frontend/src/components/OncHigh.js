@@ -21,7 +21,7 @@ const OncHigh = ({ interactions, id }) => {
 
   return (
     <div>
-      <ul key={`${id}-oh`} className="interactionPairs" id={id}>
+      <ul key={`${id}-oh`} className='interactionPairs' id={id}>
         <li key={`${id}-oh-header`}>Interaction Pair: </li>
         <ul>
           <li key={`${id}-oh-drug1`}>
