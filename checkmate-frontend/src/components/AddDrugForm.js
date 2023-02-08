@@ -159,7 +159,7 @@ const AddDrugForm = ({ getInteractions }) => {
   };
 
   return (
-    <div className="drugForm flex flex-grow justify-evenly">
+    <div className="drugForm flex flex-grow justify-evenly lg:mb-20">
       <form className="flex flex-col">
         {formData.map((element, index) => {
           return (

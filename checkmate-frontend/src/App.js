@@ -63,8 +63,8 @@ function App() {
   return (
     <div>
       <Navbar />
-      <div className=" flex mx-50 justify-center">
-        <div className="flex flex-col mt-20 mb border-2 h-max">
+      <div className=" flex justify-center scroll-smooth ">
+        <div className="content-container mb-20 flex flex-col mt-20 md:20 lg:mx-32 border-2 h-max">
           <TitleBlock />
           <button
             className="btn flex justify-end mx-10"
