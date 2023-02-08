@@ -84,11 +84,6 @@ function Medication({ currentData, idx }) {
             {currentData.frequencies[idx] ? (
               <p>Frequency: {currentData.frequencies[idx]}</p>
             ) : null}
-            <DrugLabel
-              currentData={currentData}
-              idx={idx}
-              getDrugLabel={getDrugLabel}
-            ></DrugLabel>
             <Interactions
               currentData={currentData}
               rxCUI={currentData.rxCUIs[idx]}

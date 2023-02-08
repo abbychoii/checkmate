@@ -77,10 +77,7 @@ function App() {
               <AddDrugForm getInteractions={getInteractions}></AddDrugForm>
             </div>
           ) : null}
-          <MedicationData
-            currentData={currentData}
-            getDrugLabel={getDrugLabel}
-          ></MedicationData>
+          <MedicationData currentData={currentData}></MedicationData>
         </div>
       </div>
     </div>
