@@ -7,7 +7,11 @@ const MedicationData = ({ currentData }) => {
         <h2>Medication Data</h2>
         {currentData.drugs.map((drug, idx) => (
           <div>
-            <Medication currentData={currentData} idx={idx}></Medication>
+            <Medication
+              key={idx}
+              currentData={currentData}
+              idx={idx}
+            ></Medication>
           </div>
         ))}
       </div>

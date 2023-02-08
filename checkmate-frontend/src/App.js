@@ -36,12 +36,12 @@ function App() {
     try {
       if ("fullInteractionTypeGroup" in response.data) {
         const interactions = response.data.fullInteractionTypeGroup;
-        console.log(interactions);
-        console.log(response.data);
+        // console.log(interactions);
+        // console.log(response.data);
         newInteractions.push(interactions);
       } else {
         const disclaimer = response.data.nlmDisclaimer;
-        console.log(disclaimer);
+        // console.log(disclaimer);
         newInteractions.push([disclaimer]);
       }
     } catch (error) {
@@ -57,30 +57,6 @@ function App() {
     console.log(newCurrentData);
     setCurrentData(newCurrentData);
   };
-
-  // const getDrugLabel = async (rxCUI) => {
-  //   const URL = `https://api.fda.gov/drug/label.json?search=openfda.rxcui:${rxCUI}`;
-  //   // const warnings = []
-  //   const response = await axios.get(URL);
-  //   try {
-  //     // const purpose = response.results[0].purpose[0];
-  //     const indicationUses = response.results[0].indications_and_usage[0];
-  //     // const warnings = response.results[0].warnings[0];
-  //     // const doNotUseWarning = response.results[0].do_not_use[0];
-  //     // const askDoc = response.results[0].ask_doctor[0];
-  //     // const stopUse = response.results[0].stop_use[0];
-  //     return {
-  //       //   purpose: purpose,
-  //       indicationUses: indicationUses,
-  //       //   doNotUseWarning: doNotUseWarning,
-  //       //   warnings: warnings,
-  //       //   askDoc: askDoc,
-  //       //   stopUse: stopUse,
-  //     };
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   return (
     <div>
