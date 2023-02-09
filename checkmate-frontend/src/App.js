@@ -3,6 +3,8 @@ import MedicationData from "./components/MedicationData";
 import axios from "axios";
 import { useState } from "react";
 import "./App.css";
+import TitleBlock from "./components/styles/TitleBlock.styled";
+import Navbar from "./components/styles/NavBar.styled";
 
 function App() {
   const [currentData, setCurrentData] = useState({
@@ -10,9 +12,9 @@ function App() {
     interactions: [""],
     doses: [""],
     drugs: [""],
-    frequencies: [""],
+    frequencies: [""]
   });
-  const [display, setDisplay] = useState(false);
+  const [display, setDisplay] = useState(true);
   const getInteractions = async (formData) => {
     console.log("getInteractions called");
     // console.log(formData);
@@ -52,7 +54,7 @@ function App() {
       interactions: newInteractions,
       drugs: drugs,
       doses: doses,
-      frequencies: frequencies,
+      frequencies: frequencies
     };
     console.log(newCurrentData);
     setCurrentData(newCurrentData);
@@ -60,21 +62,27 @@ function App() {
 
   return (
     <div>
-      <h1>CheckMate</h1>
-      <div className='blurb'>
-        <h3>Welcome to CheckMate!</h3>
-        CheckMate aims to provide a place to search your medications or
-        medications of interest and see potential interactions and side effects.
-      </div>
-      <button className='btn' onClick={() => setDisplay(!display)}>
-        {display ? "Hide Medication CheckMate" : "Show Medication CheckMate"}
-      </button>
-      {display ? (
-        <div>
-          <AddDrugForm getInteractions={getInteractions}></AddDrugForm>
-          <MedicationData currentData={currentData}></MedicationData>
+      <Navbar />
+      <div className=" flex justify-center bg-checkered-tetris scroll-smooth px-24 lg:px-32 h-screen">
+        <div className="content-container flex flex-col h-max px-3">
+          <TitleBlock />
+          <button
+            className="btn md:flex justify-end mb-5 hover:text-purple-400"
+            onClick={() => setDisplay(!display)}
+          >
+            {display ? "Hide Form" : "Show Form"}
+          </button>
+          {display ? (
+            <div className="flex content-evenly mx-5">
+              <AddDrugForm getInteractions={getInteractions}></AddDrugForm>
+            </div>
+          ) : null}
+          <MedicationData
+            currentData={currentData}
+            className="med-data"
+          ></MedicationData>
         </div>
-      ) : null}
+      </div>
     </div>
   );
 }

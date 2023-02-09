@@ -21,21 +21,40 @@ const OncHigh = ({ interactions, id }) => {
 
   return (
     <div>
-      <ul key={`${id}-oh`} className='interactionPairs' id={id}>
-        <li key={`${id}-oh-header`}>Interaction Pair: </li>
+      <ul
+        key={`${id}-oh`}
+        className="interactionPairs border-4 border-red-500 px-7 py-7 rounded-[0.5rem]"
+        id={id}
+      >
+        <li key={`${id}-oh-header`}>
+          <h3>Interaction Pair: </h3>
+        </li>
         <ul>
           <li key={`${id}-oh-drug1`}>
-            <a href={drug1Link}>{drug1Name}</a>
+            <a className="hover:bg-red-100 hover:text-red-700" href={drug1Link}>
+              {drug1Name}
+            </a>
           </li>
           <li key={`${id}-oh-drug2`}>
-            <a href={drug2Link}>{drug2Name}</a>
+            <a className="hover:bg-red-100 hover:text-red-700" href={drug2Link}>
+              {drug2Name}
+            </a>
           </li>
         </ul>
-        <li key={`${id}-oh-severity`}>Severity: {severity}</li>
-        <li key={`${id}-oh-description`}>Description: {description}</li>
-        <li key={`${id}-oh-comments`}>Drug Comments: {comment}</li>
+        <br />
+        <li key={`${id}-oh-severity`}>
+          {" "}
+          <h5 className="inline-flex mr-7"> ⚠️ </h5>
+          <h2 className="inline-flex">Severity: {severity}</h2>
+        </li>{" "}
+        <br />
+        <div>
+          <li key={`${id}-oh-description`}>Description: {description}</li>
+          <li key={`${id}-oh-comments`}>Drug Comments: {comment}</li>
+        </div>
         <br></br>
       </ul>
+      <br /> <br />
     </div>
   );
 };

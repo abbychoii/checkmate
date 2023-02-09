@@ -7,7 +7,7 @@ const SearchableDropdown = ({
   name,
   selectedVal,
   onDropdownChange,
-  length,
+  length
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -37,6 +37,7 @@ const SearchableDropdown = ({
         <div className="selected-value">
           <input
             ref={inputRef}
+            className="h-8"
             type="text"
             value={getDisplayValue()}
             name="searchTerm"
