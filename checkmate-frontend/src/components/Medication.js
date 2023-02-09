@@ -69,7 +69,7 @@ function Medication({ currentData, idx }) {
     <Disclosure className="mb-30">
       {({ open }) => (
         <>
-          <Disclosure.Button className="flex flex-grow rounded-lg bg-purple-100 px-10 py-2 text-left text-base font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 lg:text-xl border-2 border-purple-300 border-opacity-30 sm:mx-20">
+          <Disclosure.Button className="flex flex-grow rounded-lg bg-purple-100 px-10 py-2 text-left text-base font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 lg:text-xl border-2 border-purple-300 border-opacity-30 ">
             <h3>{currentData.drugs[idx]}</h3>
 
             <ChevronUpIcon
@@ -78,7 +78,7 @@ function Medication({ currentData, idx }) {
               } h-5 w-5 text-purple-500 self-center`}
             />
           </Disclosure.Button>
-          <Disclosure.Panel className="px-10 pt-4 pb-2 text-base lg:text-lg text-black max-w-[30rem] md:max-w-full bg-white rounded-xl border-2 border-yellow-200 flex flex-col flex-grow sm:self-center text-ellipsis sm:text-sm lg:mx-20">
+          <Disclosure.Panel className="px-10 pt-4 pb-2 text-base lg:text-lg text-black  bg-white rounded-xl border-2 border-yellow-200 flex flex-col flex-grow sm:self-center text-ellipsis sm:text-sm ">
             <h3>{`${currentData.drugs[idx]}`}</h3>
 
             <p>Dose: {currentData.doses[idx]}</p>

@@ -159,15 +159,27 @@ const AddDrugForm = ({ getInteractions }) => {
   };
 
   return (
-    <div className="drugForm flex flex-grow justify-evenly lg:my-15 lg:mx-32 lg:rounded-[5rem] sm:rounded-lg bg-white border-8 lg:border-[20px] border-yellow-200">
-      <form className="flex flex-col lg:my-10">
+    <div className="drugForm flex flex-grow justify-evenly lg:my-15 rounded-[5rem] bg-white border-[20px] lg:border-[20px] border-yellow-200 ">
+      <form className="flex flex-grow lg:my-10 py-10 md:px-20 flex-col px-5">
         {formData.map((element, index) => {
           return (
-            <div className="medData flex flex-row flex-grow" key={index}>
+            <div
+              className="medData flex flex-col md:flex-row flex-grow place-content-between items-center"
+              key={index}
+            >
               <div className="info">
                 {index === 0 ? (
-                  <label htmlFor="drug">
-                    Drug {<span className="valid-req"> required</span>}
+                  <label
+                    htmlFor="drug"
+                    className="lg:text-[1.5rem] font-bold lg:ml-4"
+                  >
+                    Drug
+                    {
+                      <span className="valid-req italic text-gray-400 text-[0.7rem] lg:text-[1rem] lg:font-normal">
+                        {" "}
+                        required*
+                      </span>
+                    }
                   </label>
                 ) : null}
                 <SearchableDropdown
@@ -184,8 +196,15 @@ const AddDrugForm = ({ getInteractions }) => {
               </div>
               <div className="info">
                 {index === 0 ? (
-                  <label htmlFor="dose">
-                    Dose {<span className="valid-req"> required</span>}{" "}
+                  <label
+                    htmlFor="dose"
+                    className="lg:text-[1.5rem] font-bold lg:ml-4"
+                  >
+                    Dose
+                    <span className="valid-req font-normal italic text-gray-400 lg:text-[1rem] text-[0.7rem]">
+                      {" "}
+                      required*
+                    </span>
                   </label>
                 ) : null}
                 <SearchableDropdown
@@ -202,16 +221,24 @@ const AddDrugForm = ({ getInteractions }) => {
                   }
                 ></SearchableDropdown>
               </div>
-              <div className="info freq flex min-h-full flex-col">
+              <div className="info freq flex flex-col">
                 {index === 0 ? (
-                  <label htmlFor="freq" className="">
+                  <label
+                    htmlFor="freq"
+                    className="lg:text-[1.5rem] font-bold lg:ml-4 align-top"
+                  >
                     Frequency
-                    {<span className="valid-opt"> optional</span>}
+                    {
+                      <span className="valid-opt italic text-gray-400 lg:text-[1rem] font-normal text-[0.7rem]">
+                        {" "}
+                        optional
+                      </span>
+                    }
                   </label>
                 ) : null}
                 <div className="inputContainer flex flex-grow">
                   <input
-                    className="freqInput flex self-center border-2 h-8 ml-3"
+                    className="freqInput flex self-center border-[0.05rem] border-gray-400 rounded-full py-2 pl-5 sm:w-32 lg:w-64 text-[1.2rem]"
                     type="text"
                     id="freq"
                     name="frequency"
@@ -237,16 +264,16 @@ const AddDrugForm = ({ getInteractions }) => {
             </div>
           );
         })}
-        <div className="btnContainer flex flex-col justify-evenly my-5 gap-2 ">
+        <div className="btnContainer flex flex-col justify-evenly gap-2 mb-5 ">
           <button
-            className="btn h-10 border-dashed border-2 border-opacity-20  border-gray-600 bg-gray-100 text-gray-700 font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-gray-50 hover:shadow-2xl focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg transition duration-150 ease-in-out"
+            className="btn py-2 border-dashed border-2 border-opacity-20  border-gray-600 bg-gray-100 text-gray-700 font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-gray-50 hover:shadow-2xl focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg transition duration-150 ease-in-out text-[1rem]"
             type="button"
             onClick={() => addFormFields()}
           >
             Add Drug
           </button>
           <input
-            className="btn h-10 border-2 bg-black border-black text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md focus:bg-gray-800-700 focus:shadow-lg hover:shadow-xl focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg transition duration-150 ease-in-out"
+            className="btn py-2 border-2 bg-black border-black text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md focus:bg-gray-800-700 focus:shadow-lg hover:shadow-xl focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg transition duration-150 ease-in-out text-[1rem]"
             type="submit"
             value="Check Interactions"
             onClick={handleSubmit}
