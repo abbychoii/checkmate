@@ -3,7 +3,8 @@ import React from "react";
 // import OncHighList from "./OncHigh";
 // import DrugBankList from "./DrugBankList";
 import Interactions from "./Interactions";
-// import axios from "axios";
+import { Disclosure } from "@headlessui/react";
+import { ChevronUpIcon } from "@heroicons/react/20/solid";
 //
 function Medication({ currentData, idx }) {
   const getDrugTitle = () => {
@@ -65,18 +66,34 @@ function Medication({ currentData, idx }) {
   };
 
   return (
-    <div>
-      {getDrugTitle()}
-      <p>Dose: {currentData.doses[idx]}</p>
-      {currentData.frequencies[idx] ? (
-        <p>Frequency: {currentData.frequencies[idx]}</p>
-      ) : null}
-      {getPriceLink()}
-      <Interactions
-        currentData={currentData}
-        rxCUI={currentData.rxCUIs[idx]}
-      ></Interactions>
-    </div>
+    <Disclosure className="mb-30">
+      {({ open }) => (
+        <>
+          <Disclosure.Button className="flex flex-grow rounded-lg bg-purple-100 px-10 py-2 text-left text-base font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 lg:text-xl border-2 border-purple-300 border-opacity-30 ">
+            <h3>{currentData.drugs[idx]}</h3>
+
+            <ChevronUpIcon
+              className={`${
+                open ? "rotate-180 transform" : ""
+              } h-5 w-5 text-purple-500 self-center`}
+            />
+          </Disclosure.Button>
+          <Disclosure.Panel className="px-10 pt-4 pb-2 text-base lg:text-lg text-black  bg-white rounded-xl border-2 border-yellow-200 flex flex-col flex-grow sm:self-center text-ellipsis sm:text-sm ">
+            <h3>{`${currentData.drugs[idx]}`}</h3>
+
+            <p>Dose: {currentData.doses[idx]}</p>
+            <br />
+            {currentData.frequencies[idx] ? (
+              <p>Frequency: {currentData.frequencies[idx]}</p>
+            ) : null}
+            <Interactions
+              currentData={currentData}
+              rxCUI={currentData.rxCUIs[idx]}
+            ></Interactions>
+          </Disclosure.Panel>
+        </>
+      )}
+    </Disclosure>
   );
 }
 

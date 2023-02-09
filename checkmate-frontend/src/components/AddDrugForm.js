@@ -10,15 +10,15 @@ const AddDrugForm = ({ getInteractions }) => {
       drug: "",
       dose: "",
       frequency: "",
-      rxCUI: "",
-    },
+      rxCUI: ""
+    }
   ]);
 
   const [drugSuggestions, setDrugSuggestions] = useState({
     drugNames: [""],
     doses: [""],
     rxCUIs: [""],
-    only: false,
+    only: false
   });
 
   const handleChange = async (i, e) => {
@@ -58,7 +58,7 @@ const AddDrugForm = ({ getInteractions }) => {
       } else {
         newDrugSuggestions = {
           ...drugSuggestions,
-          drugNames: response.data[1],
+          drugNames: response.data[1]
         };
       }
       console.log(newDrugSuggestions);
@@ -89,7 +89,7 @@ const AddDrugForm = ({ getInteractions }) => {
         drugNames: [""],
         doses: [""],
         rxCUIs: [""],
-        only: false,
+        only: false
       });
     } else {
       alert("Drug Name and Dose are Required");
@@ -125,14 +125,14 @@ const AddDrugForm = ({ getInteractions }) => {
           drug: "",
           dose: "",
           frequency: "",
-          rxCUI: "",
-        },
+          rxCUI: ""
+        }
       ]);
       setDrugSuggestions({
         drugNames: [""],
         doses: [""],
         rxCUIs: [""],
-        only: false,
+        only: false
       });
     }
   };
@@ -159,22 +159,34 @@ const AddDrugForm = ({ getInteractions }) => {
   };
 
   return (
-    <div className='drugForm'>
-      <form>
+    <div className="drugForm flex flex-grow justify-evenly lg:my-15 rounded-[5rem] bg-white border-[20px] lg:border-[20px] border-yellow-200 ">
+      <form className="flex flex-grow lg:my-10 py-10 md:px-20 flex-col px-5">
         {formData.map((element, index) => {
           return (
-            <div className='medData' key={index}>
-              <div className='info'>
+            <div
+              className="medData flex flex-col md:flex-row flex-grow place-content-between items-center"
+              key={index}
+            >
+              <div className="info">
                 {index === 0 ? (
-                  <label htmlFor='drug'>
-                    Drug {<span className='valid-req'> required</span>}
+                  <label
+                    htmlFor="drug"
+                    className="lg:text-[1.5rem] font-bold lg:ml-4"
+                  >
+                    Drug
+                    {
+                      <span className="valid-req italic text-gray-400 text-[0.7rem] lg:text-[1rem] lg:font-normal">
+                        {" "}
+                        required*
+                      </span>
+                    }
                   </label>
                 ) : null}
                 <SearchableDropdown
                   options={drugSuggestions.drugNames}
                   idx={index}
-                  id='drug'
-                  name='drug'
+                  id="drug"
+                  name="drug"
                   selectedVal={element.drug}
                   length={formData.length}
                   onDropdownChange={(e) =>
@@ -182,18 +194,25 @@ const AddDrugForm = ({ getInteractions }) => {
                   }
                 ></SearchableDropdown>
               </div>
-              <div className='info'>
+              <div className="info">
                 {index === 0 ? (
-                  <label htmlFor='dose'>
-                    Dose {<span className='valid-req'> required</span>}{" "}
+                  <label
+                    htmlFor="dose"
+                    className="lg:text-[1.5rem] font-bold lg:ml-4"
+                  >
+                    Dose
+                    <span className="valid-req font-normal italic text-gray-400 lg:text-[1rem] text-[0.7rem]">
+                      {" "}
+                      required*
+                    </span>
                   </label>
                 ) : null}
                 <SearchableDropdown
                   options={drugSuggestions.doses}
                   idx={index}
                   length={formData.length}
-                  id='dose'
-                  name='dose'
+                  id="dose"
+                  name="dose"
                   selectedVal={element.dose}
                   onDropdownChange={(e) =>
                     handleDropdownChange(index, e, "dose").then(
@@ -202,48 +221,61 @@ const AddDrugForm = ({ getInteractions }) => {
                   }
                 ></SearchableDropdown>
               </div>
-              <div className='info freq'>
+              <div className="info freq flex flex-col">
                 {index === 0 ? (
-                  <label htmlFor='freq' className=''>
+                  <label
+                    htmlFor="freq"
+                    className="lg:text-[1.5rem] font-bold lg:ml-4 align-top"
+                  >
                     Frequency
-                    {<span className='valid-opt'> optional</span>}
+                    {
+                      <span className="valid-opt italic text-gray-400 lg:text-[1rem] font-normal text-[0.7rem]">
+                        {" "}
+                        optional
+                      </span>
+                    }
                   </label>
                 ) : null}
-                <div className='inputContainer'>
+                <div className="inputContainer flex flex-grow">
                   <input
-                    className='freqInput'
-                    type='text'
-                    id='freq'
-                    name='frequency'
+                    className="freqInput flex self-center border-[0.05rem] border-gray-400 rounded-full py-2 pl-5 sm:w-32 lg:w-64 text-[1.2rem]"
+                    type="text"
+                    id="freq"
+                    name="frequency"
                     value={element.frequency || ""}
-                    placeholder='frequency'
+                    placeholder="frequency"
                     onChange={(e) => handleChange(index, e)}
                     // disabled={index === formData.length - 1 ? false : true}
                   />
                 </div>
               </div>
               {index || formData.length > 1 ? (
-                <div className='info'>
+                <div className="info flex content-center">
                   <button
-                    type='button'
-                    className='btnX'
+                    type="button"
+                    className="btnX"
                     onClick={() => removeFormData(index)}
                   >
-                    {`Delete ${formData[index].drug}`}
+                    {/* {`Delete ${formData[index].drug}`} */}
+                    {`x`}
                   </button>
                 </div>
               ) : null}
             </div>
           );
         })}
-        <div className='btnContainer'>
-          <button className='btn' type='button' onClick={() => addFormFields()}>
+        <div className="btnContainer flex flex-col justify-evenly gap-2 mb-5 ">
+          <button
+            className="btn py-2 border-dashed border-2 border-opacity-20  border-gray-600 bg-gray-100 text-gray-700 font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-gray-50 hover:shadow-2xl focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg transition duration-150 ease-in-out text-[1rem]"
+            type="button"
+            onClick={() => addFormFields()}
+          >
             Add Drug
           </button>
           <input
-            className='btn'
-            type='submit'
-            value='Check Interactions'
+            className="btn py-2 border-2 bg-black border-black text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md focus:bg-gray-800-700 focus:shadow-lg hover:shadow-xl focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg transition duration-150 ease-in-out text-[1rem]"
+            type="submit"
+            value="Check Interactions"
             onClick={handleSubmit}
           />
         </div>
