@@ -75,8 +75,11 @@ function App() {
           <MedicationData currentData={currentData}></MedicationData>
         </div>
       ) : null}
+      <div id='goodrx_search_widget'> </div>
     </div>
   );
 }
 
 export default App;
+
+//https://www.youtube.com/watch?v=Tr83ixuwyuo&ab_channel=ckmobile
