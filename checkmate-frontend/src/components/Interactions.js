@@ -17,19 +17,24 @@ const Interactions = ({ currentData, rxCUI }) => {
       );
     } else {
       return (
-        <>
-          <h3>Interaction Data</h3>
+        <div className="divide-y divide-solid divide-purple-700">
           {currentData.interactions[0].length < 2 ? null : (
-            <OncHighList
+            <div>
+              <OncHighList
+                interactions={currentData.interactions}
+                rxCUI={rxCUI}
+              ></OncHighList>
+            </div>
+          )}
+
+          <div>
+            <br />
+            <DrugBankList
               interactions={currentData.interactions}
               rxCUI={rxCUI}
-            ></OncHighList>
-          )}
-          <DrugBankList
-            interactions={currentData.interactions}
-            rxCUI={rxCUI}
-          ></DrugBankList>
-        </>
+            ></DrugBankList>
+          </div>
+        </div>
       );
     }
   };

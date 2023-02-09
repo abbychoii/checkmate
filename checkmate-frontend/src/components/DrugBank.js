@@ -22,7 +22,9 @@ const DrugBank = ({ interactions, id }) => {
   return (
     <div>
       <ul key={`${id}-db`} className="interactionPairs" id={id}>
-        <li key={`${id}-db-header`}>Interaction Pair: </li>
+        <li key={`${id}-db-header`}>
+          <h3>Interaction Pair: </h3>
+        </li>
         <ul>
           <li key={`${id}-db-drug1`}>
             <a href={drug1Link}>{drug1Name}</a>
@@ -30,10 +32,17 @@ const DrugBank = ({ interactions, id }) => {
           <li key={`${id}-db-drug2`}>
             <a href={drug2Link}>{drug2Name}</a>
           </li>
+          <br />
         </ul>
-        <li key={`${id}-db-severity`}>Severity: {severity}</li>
-        <li key={`${id}-db-description`}>Description: {description}</li>
-        <li key={`${id}-db-comments`}>Drug Comments: {comment}</li>
+        <li key={`${id}-db-description`}>
+          <h3>Description: </h3>
+          {description}
+        </li>{" "}
+        <br />
+        <li key={`${id}-db-comments`}>
+          <h3>Drug Comments: </h3>
+          {comment}
+        </li>
         <br></br>
       </ul>
     </div>

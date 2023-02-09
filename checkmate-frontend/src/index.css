@@ -1,3 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Shrikhand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fanwood+Text&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'Shrikhand';
+    font-family: 'Fanwood';
+    font-family: 'Space Mono', monospace;
+    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+@layer base {
+    button, input, div {
+        @apply font-groteskreg tracking-wide 
+    }
+    h3 {
+        @apply font-bold text-2xl
+    }
+    a {
+        @apply bg-black text-white hover:bg-purple-200 hover:text-black
+    }
+
+    h2 {
+        @apply font-bold py-3 px-3 rounded-[0.5rem] border-red-400 border-4  bg-red-600 text-white
+    }
+
+    img {
+        @apply bg-white hover:bg-transparent
+    }
+
+    h5 {
+        @apply text-3xl align-middle
+    }
+}
+
+
+
+
+
+

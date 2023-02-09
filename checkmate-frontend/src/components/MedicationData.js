@@ -3,10 +3,9 @@ const MedicationData = ({ currentData }) => {
   console.log(currentData);
   if (currentData.drugs[0]) {
     return (
-      <div className="flex flex-col mx-10 border-2 mb-10 mt-10">
-        <h2>Medication Data</h2>
+      <div className="flex flex-col items-center lg:mx-52 mb-10 mt-10">
         {currentData.drugs.map((drug, idx) => (
-          <div className="flex flex-grow flex-col">
+          <div className="flex flex-grow flex-col min-w-full">
             <Medication
               key={idx}
               currentData={currentData}

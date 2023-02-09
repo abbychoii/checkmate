@@ -17,8 +17,11 @@ function DrugBankList({ interactions, rxCUI }) {
   return (
     <div>
       <ul>
-        <li>Source Name: {data.sourceName}</li>
-        <li>Source Disclaimer: {data.sourceDisclaimer}</li>
+        <li>
+          <h3>Source Name:</h3> {data.sourceName}
+        </li>
+        <br />
+        <li>Source Disclaimer: {data.sourceDisclaimer}</li> <br />
         {drugBankComponents}
       </ul>
     </div>

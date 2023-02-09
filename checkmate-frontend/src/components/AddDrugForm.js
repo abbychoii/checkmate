@@ -159,8 +159,8 @@ const AddDrugForm = ({ getInteractions }) => {
   };
 
   return (
-    <div className="drugForm flex flex-grow justify-evenly lg:mb-20">
-      <form className="flex flex-col">
+    <div className="drugForm flex flex-grow justify-evenly lg:my-15 lg:mx-32 lg:rounded-[5rem] sm:rounded-lg bg-white border-8 lg:border-[20px] border-yellow-200">
+      <form className="flex flex-col lg:my-10">
         {formData.map((element, index) => {
           return (
             <div className="medData flex flex-row flex-grow" key={index}>
@@ -237,16 +237,16 @@ const AddDrugForm = ({ getInteractions }) => {
             </div>
           );
         })}
-        <div className="btnContainer flex flex-col justify-evenly my-5 gap-2">
+        <div className="btnContainer flex flex-col justify-evenly my-5 gap-2 ">
           <button
-            className="btn h-10 border-dashed border-2 border-opacity-20  border-gray-600 bg-gray-200 text-gray-700 font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-gray-300 hover:shadow-lg focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg transition duration-150 ease-in-out"
+            className="btn h-10 border-dashed border-2 border-opacity-20  border-gray-600 bg-gray-100 text-gray-700 font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-gray-50 hover:shadow-2xl focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg transition duration-150 ease-in-out"
             type="button"
             onClick={() => addFormFields()}
           >
             Add Drug
           </button>
           <input
-            className="btn h-10 border-2 border-blue-400 bg-blue-400 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+            className="btn h-10 border-2 bg-black border-black text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md focus:bg-gray-800-700 focus:shadow-lg hover:shadow-xl focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg transition duration-150 ease-in-out"
             type="submit"
             value="Check Interactions"
             onClick={handleSubmit}

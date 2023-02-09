@@ -63,21 +63,24 @@ function App() {
   return (
     <div>
       <Navbar />
-      <div className=" flex justify-center scroll-smooth ">
-        <div className="content-container mb-20 flex flex-col mt-20 md:20 lg:mx-32 border-2 h-max">
+      <div className=" flex justify-center scroll-smooth bg-checkered-tetris bg-contain">
+        <div className="content-container  flex flex-col lg:my-0 lg:mx-0 h-max">
           <TitleBlock />
           <button
-            className="btn flex justify-end mx-10"
+            className="btn hidden md:flex justify-end lg:mx-52 mb-5 hover:text-purple-400"
             onClick={() => setDisplay(!display)}
           >
             {display ? "Hide Form" : "Show Form"}
           </button>
           {display ? (
-            <div className="flex">
+            <div className="flex ">
               <AddDrugForm getInteractions={getInteractions}></AddDrugForm>
             </div>
           ) : null}
-          <MedicationData currentData={currentData}></MedicationData>
+          <MedicationData
+            currentData={currentData}
+            className="med-data"
+          ></MedicationData>
         </div>
       </div>
     </div>
