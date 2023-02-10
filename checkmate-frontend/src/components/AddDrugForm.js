@@ -273,7 +273,7 @@ const AddDrugForm = ({ getInteractions }) => {
             Add Drug
           </button>
           <input
-            className="btn py-2 border-2 bg-black border-black text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md focus:bg-gray-800-700 focus:shadow-lg hover:shadow-xl focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg transition duration-150 ease-in-out text-[1rem]"
+            className="btn py-2 border-2 bg-black border-black text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md focus:bg-gray-800-700 focus:shadow-lg hover:shadow-xl focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg transition duration-150 ease-in-out md:text-[1rem]"
             type="submit"
             value="Check Interactions"
             onClick={handleSubmit}
