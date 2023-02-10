@@ -7,17 +7,14 @@ const Interactions = ({ currentData, rxCUI }) => {
   // console.log(interactions[0]);
   // console.log(interactions[0][0]);
 
-  const interactionDataDisplay = () => {
-    if (typeof currentData.interactions[0][0] === "string") {
-      return (
-        <>
-          <h3>Interaction Data</h3>
-          <p>Disclaimer: {currentData.interactions[0][0]}</p>
-        </>
-      );
-    } else {
-      return (
-        <div className="divide-y divide-solid divide-purple-700">
+  // const rxCUIStr = rxCUIs;
+  if (
+    currentData.drugs[0] &&
+    typeof currentData.interactions[0][0] !== "string"
+  ) {
+    return (
+      <>
+        <div className='divide-y divide-solid divide-purple-700'>
           {currentData.interactions[0].length < 2 ? null : (
             <div>
               <OncHighList
@@ -35,20 +32,14 @@ const Interactions = ({ currentData, rxCUI }) => {
             ></DrugBankList>
           </div>
         </div>
-      );
-    }
-  };
-
-  // const rxCUIStr = rxCUIs;
-  if (
-    currentData.drugs[0] &&
-    typeof currentData.interactions[0][0] !== "string"
-  ) {
-    return <>{interactionDataDisplay()}</>;
+      </>
+    );
   } else {
     return (
       <>
         <h3>Interaction Data</h3>
+        <p>No interactions found for {currentData.drugs.join(", ")}</p>
+        <br></br>
         <p>Disclaimer: {currentData.interactions[0][0]}</p>
       </>
     );

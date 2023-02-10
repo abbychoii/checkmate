@@ -18,17 +18,16 @@ const OncHighList = ({ interactions, rxCUI }) => {
   if (OncHighComponents[0]) {
     return (
       <div>
+        {OncHighComponents}
+        <br />
         <ul>
           <li>
             <h3>Source Name:</h3> {data.sourceName}
-          </li>{" "}
-          <br />
+          </li>
           <li>
             <h3>Source Disclaimer:</h3>{" "}
             <a href={data.sourceDisclaimer}>{data.sourceDisclaimer} </a>
           </li>
-          <br />
-          {OncHighComponents}
         </ul>
       </div>
     );
