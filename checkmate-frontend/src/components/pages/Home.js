@@ -91,7 +91,7 @@ function Home() {
   return (
     <div>
       <Navbar user={user} handleSignOut={handleSignOut} />
-      <div className=" flex justify-center bg-tetris2 scroll-smooth px-24 lg:px-32 h-screen">
+      <div className=" flex justify-center bg-tetris2 scroll-smooth px-24 lg:px-32 min-h-screen h-max">
         <div className="content-container flex flex-col h-max px-3">
           <TitleBlock />
           {user ? (
