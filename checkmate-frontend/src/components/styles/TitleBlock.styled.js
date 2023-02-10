@@ -4,7 +4,7 @@ const TitleBlock = () => {
   return (
     <div className="">
       <div className=" h-auto rounded-[3rem] md:rounded-[3rem] lg:rounded-[3rem] xl:rounded-[5rem] md:flex md:flex-col xl:grid grid-cols-3 lg:h-[35rem] items-center justify-center border-spacing-12 border-[20px] mt-20 text-center mb-10 border-yellow-200 shadow-yellow-400 bg-white">
-        <h1 className="title subpixel-antialiased my-5 lg:mt-0 font-space lg:text-4xl hover:-rotate-12 hover:text-purple-400 sm:text-4xl md:text-4xl">
+        <h1 className="title subpixel-antialiased my-5 lg:mt-0 font-space text-4xl hover:-rotate-12 hover:text-purple-400">
           CheckMate
         </h1>
 
