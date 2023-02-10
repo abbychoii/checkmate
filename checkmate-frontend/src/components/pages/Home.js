@@ -27,11 +27,11 @@ function Home() {
     google.accounts.id.initialize({
       client_id:
         "595741328882-52aau51goa0gdurn1vbv9l5t0863r4rk.apps.googleusercontent.com",
-      callback: handleCallbackResponse
+      callback: handleCallbackResponse,
     });
     google.accounts.id.renderButton(document.getElementById("signInDiv"), {
       theme: "outline",
-      size: "large"
+      size: "large",
     });
   }, []);
 
@@ -40,7 +40,7 @@ function Home() {
     interactions: [""],
     doses: [""],
     drugs: [""],
-    frequencies: [""]
+    frequencies: [""],
   });
   const [display, setDisplay] = useState(true);
   const getInteractions = async (formData) => {
@@ -82,7 +82,7 @@ function Home() {
       interactions: newInteractions,
       drugs: drugs,
       doses: doses,
-      frequencies: frequencies
+      frequencies: frequencies,
     };
     console.log(newCurrentData);
     setCurrentData(newCurrentData);
@@ -91,28 +91,28 @@ function Home() {
   return (
     <div>
       <Navbar user={user} handleSignOut={handleSignOut} />
-      <div className=" flex justify-center bg-tetris2 scroll-smooth px-24 lg:px-32 min-h-max">
-        <div className="content-container flex flex-col h-max px-3">
+      <div className=' flex justify-center bg-tetris2 scroll-smooth px-24 lg:px-32 min-h-max'>
+        <div className='content-container flex flex-col h-max px-3'>
           <TitleBlock />
           {user ? (
-            <div className="flex  flex-grow justify-evenly lg:my-15 rounded-[5rem] bg-white border-[20px] lg:border-[20px] border-yellow-200">
+            <div className='flex  flex-grow justify-evenly lg:my-15 rounded-[5rem] bg-white border-[20px] lg:border-[20px] border-yellow-200'>
               Welcome {user.name}!
             </div>
           ) : null}
           <button
-            className="btn md:flex justify-end mb-5 hover:text-purple-400"
+            className='btn md:flex justify-end mb-5 hover:text-purple-400'
             onClick={() => setDisplay(!display)}
           >
             {display ? "Hide Form" : "Show Form"}
           </button>
           {display ? (
-            <div className="flex content-evenly mx-5">
+            <div className='flex content-evenly mx-5'>
               <AddDrugForm getInteractions={getInteractions}></AddDrugForm>
             </div>
           ) : null}
           <MedicationData
             currentData={currentData}
-            className="med-data"
+            className='med-data'
           ></MedicationData>
         </div>
       </div>
