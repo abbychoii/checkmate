@@ -242,7 +242,7 @@ const AddDrugForm = ({ getInteractions }) => {
                     type="text"
                     id="freq"
                     name="frequency"
-                    value={element.frequency || ""},
+                    value={element.frequency || ""}
                     placeholder="frequency"
                     onChange={(e) => handleChange(index, e)}
                     // disabled={index === formData.length - 1 ? false : true}
