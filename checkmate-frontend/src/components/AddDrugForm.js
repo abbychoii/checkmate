@@ -238,7 +238,7 @@ const AddDrugForm = ({ getInteractions }) => {
                 ) : null}
                 <div className="inputContainer flex flex-grow">
                   <input
-                    className="freqInput flex self-center border-[0.05rem] border-gray-400 rounded-full py-2 pl-5 sm:w-32 lg:w-64 text-[1.2rem]"
+                    className="freqInput flex self-center border-[0.05rem] border-gray-400 rounded-full py-2 pl-5 w-full text-[1.2rem] "
                     type="text"
                     id="freq"
                     name="frequency"
@@ -250,7 +250,7 @@ const AddDrugForm = ({ getInteractions }) => {
                 </div>
               </div>
               {index || formData.length > 1 ? (
-                <div className="info flex content-center">
+                <div className="info flex flex-grow content-center">
                   <button
                     type="button"
                     className="btnX"
