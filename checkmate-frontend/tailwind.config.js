@@ -10,7 +10,8 @@ module.exports = {
         groteskreg: ["space grotesk", "serif", "regular"]
       },
       backgroundImage: {
-        "checkered-tetris": "url(./tetris.svg)"
+        "checkered-tetris": "url(./tetris.svg)",
+        tetris2: "url(./tetris2.svg)"
       }
     }
   },

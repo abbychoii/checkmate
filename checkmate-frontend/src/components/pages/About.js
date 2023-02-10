@@ -1,5 +1,9 @@
 const About = () => {
-  return <p>Created by Abby & Kate</p>;
+  return (
+    <div className="bg-tetris2 h-screen">
+      <p>Created by Abby & Kate</p>
+    </div>
+  );
 };
 
 export default About;
