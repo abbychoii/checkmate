@@ -21,7 +21,7 @@ export default function Navbar() {
 
           <div className="items-center justify-end md:flex md:flex-1 lg:w-0 ">
             <a
-              href="http://localhost:3000/about"
+              href="https://checkmate.herokuapp.com/about"
               className="ml-8 inline-flex items-center justify-center bg-white text-black px-4 py-2 text-base font-medium hover:text-purple-400 hover:rotate-12 sm:text-sm font-groteskreg lg:text-base"
             >
               About
