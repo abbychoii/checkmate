@@ -1,6 +1,6 @@
 import { Popover } from "@headlessui/react";
 
-export default function Navbar({ user, handleSignOut }) {
+export default function Navbar({ user, handleSignOut, setUser }) {
   return (
     <Popover className='relative bg-white'>
       <div className='max-w-full px-6'>
@@ -32,6 +32,12 @@ export default function Navbar({ user, handleSignOut }) {
             >
               About
             </a>
+            <a
+              href='http://localhost:3000/interactions'
+              className='ml-8 inline-flex items-center justify-center bg-white text-black px-4 py-2 text-base font-medium hover:text-purple-400 hover:rotate-12 sm:text-sm font-groteskreg lg:text-base'
+            >
+              Interactions CheckMate
+            </a>
             {user ? (
               <a
                 href='http://localhost:3000/profile'
@@ -46,7 +52,6 @@ export default function Navbar({ user, handleSignOut }) {
             ) : null}
           </div>
           <div>
-            <div id='signInDiv'></div>
             {user ? (
               <button
                 className='btnml-8 inline-flex items-center justify-center bg-white text-black px-4 py-2 text-base font-medium hover:text-purple-400 hover:rotate-12 sm:text-sm font-groteskreg lg:text-base'
@@ -54,7 +59,9 @@ export default function Navbar({ user, handleSignOut }) {
               >
                 Sign Out
               </button>
-            ) : null}
+            ) : (
+              <div id='signInDiv'></div>
+            )}
           </div>
         </div>
       </div>
