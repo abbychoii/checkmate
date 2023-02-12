@@ -7,7 +7,8 @@ const SearchableDropdown = ({
   name,
   selectedVal,
   onDropdownChange,
-  length
+  length,
+  edit,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -32,15 +33,15 @@ const SearchableDropdown = ({
   };
 
   return (
-    <div className="dropdown">
-      <div className="control">
-        <div className="selected-value">
+    <div className='dropdown'>
+      <div className='control'>
+        <div className='selected-value'>
           <input
             ref={inputRef}
-            className="h-8"
-            type="text"
+            className='h-8'
+            type='text'
             value={getDisplayValue()}
-            name="searchTerm"
+            name='searchTerm'
             disabled={idx === length - 1 ? false : true}
             onChange={(e) => {
               console.log(e);

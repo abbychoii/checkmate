@@ -6,6 +6,7 @@ import About from "./components/pages/About";
 import Home from "./components/pages/Home";
 import Profile from "./components/pages/Profile";
 import InteractionsCheckMate from "./components/pages/InteractionsCheckMate";
+import "./App.css";
 
 function App() {
   const [user, setUser] = useState("");
@@ -34,7 +35,14 @@ function App() {
     });
     google.accounts.id.renderButton(document.getElementById("signInDiv"), {
       theme: "outline",
+      size: "medium",
+      shape: "pill",
+    });
+    google.accounts.id.renderButton(document.getElementById("signUpDiv"), {
+      theme: "outline",
       size: "large",
+      shape: "pill",
+      width: "250px",
     });
   }, [user]);
 

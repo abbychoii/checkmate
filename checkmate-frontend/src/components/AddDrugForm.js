@@ -4,28 +4,33 @@ import axios from "axios";
 import SearchableDropdown from "./SearchableDropdown";
 import "./AddDrugForm.css";
 
-const AddDrugForm = ({ getInteractions }) => {
+const AddDrugForm = ({ getInteractions, type }) => {
   const [formData, setFormData] = useState([
     {
       drug: "",
       dose: "",
       frequency: "",
-      rxCUI: ""
-    }
+      rxCUI: "",
+      save: "",
+    },
   ]);
 
   const [drugSuggestions, setDrugSuggestions] = useState({
     drugNames: [""],
     doses: [""],
     rxCUIs: [""],
-    only: false
+    only: false,
   });
+
+  const [edit, setEdit] = useState([false]);
 
   const handleChange = async (i, e) => {
     let newFormData = [...formData];
     // console.log(e);
     // console.log(e.target);
+
     newFormData[i][e.target.name] = e.target.value;
+
     setFormData(newFormData);
   };
 
@@ -58,7 +63,7 @@ const AddDrugForm = ({ getInteractions }) => {
       } else {
         newDrugSuggestions = {
           ...drugSuggestions,
-          drugNames: response.data[1]
+          drugNames: response.data[1],
         };
       }
       console.log(newDrugSuggestions);
@@ -89,8 +94,9 @@ const AddDrugForm = ({ getInteractions }) => {
         drugNames: [""],
         doses: [""],
         rxCUIs: [""],
-        only: false
+        only: false,
       });
+      setEdit([...edit, true]);
     } else {
       alert("Drug Name and Dose are Required");
     }
@@ -100,17 +106,23 @@ const AddDrugForm = ({ getInteractions }) => {
     let newFormData = [...formData];
     newFormData.splice(i, 1);
     setFormData(newFormData);
+
+    let newEdit = [...edit];
+    newEdit.splice(i, 1);
+    setEdit(newEdit);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.length < 2) {
+    if (formData.length < 2 && type === "interactioncheck") {
       alert("More than 1 Drug is Necessary to Check Interactions");
     } else if (
       !formData[formData.length - 1].drug ||
       !formData[formData.length - 1].dose
     ) {
-      alert("Drug Name and Dose are Required to Check Interactions");
+      type === "interactioncheck"
+        ? alert("Drug Name and Dose are Required to Check Interactions")
+        : alert("Drug Name and Dose are Required to add to Med List");
     } else {
       const newFormData = [];
       for (let idx in formData) {
@@ -120,19 +132,20 @@ const AddDrugForm = ({ getInteractions }) => {
       }
       console.log(newFormData);
       getInteractions(newFormData);
+
       setFormData([
         {
           drug: "",
           dose: "",
           frequency: "",
-          rxCUI: ""
-        }
+          rxCUI: "",
+        },
       ]);
       setDrugSuggestions({
         drugNames: [""],
         doses: [""],
         rxCUIs: [""],
-        only: false
+        only: false,
       });
     }
   };
@@ -158,128 +171,148 @@ const AddDrugForm = ({ getInteractions }) => {
     return e;
   };
 
+  // const handleEditClick = (i) => {
+  //   for (let i in )
+  // };
+
   return (
-    <div className="drugForm flex flex-grow justify-evenly lg:my-15 rounded-[5rem] bg-white border-[20px] lg:border-[20px] border-yellow-200 ">
-      <form className="flex flex-grow lg:my-10 py-10 md:px-20 flex-col px-5">
-        {formData.map((element, index) => {
-          return (
-            <div
-              className="medData flex flex-col md:flex-row flex-grow place-content-between items-center"
-              key={index}
+    <div>
+      <div className='drugForm flex flex-grow justify-evenly lg:my-15 rounded-[5rem] bg-white border-[20px] lg:border-[20px] border-yellow-200 '>
+        <form className='flex flex-grow lg:my-10 py-10 md:px-20 flex-col px-5'>
+          {formData.map((element, index) => {
+            return (
+              <div>
+                <div
+                  className='medData flex flex-col md:flex-row flex-grow place-content-between items-center'
+                  key={index}
+                >
+                  <div className='info'>
+                    {index === 0 ? (
+                      <label
+                        htmlFor='drug'
+                        className='lg:text-[1.5rem] font-bold lg:ml-4 flex flex-nowrap'
+                      >
+                        Drug
+                        {
+                          <span className='valid-req italic text-gray-400 text-[0.7rem] lg:text-[1rem] lg:font-normal'>
+                            {" "}
+                            required*
+                          </span>
+                        }
+                      </label>
+                    ) : null}
+                    <SearchableDropdown
+                      options={drugSuggestions.drugNames}
+                      idx={index}
+                      id='drug'
+                      name='drug'
+                      selectedVal={element.drug}
+                      length={formData.length}
+                      onDropdownChange={(e) =>
+                        handleDropdownChange(index, e, "drug")
+                      }
+                      edit={edit[index]}
+                    ></SearchableDropdown>
+                  </div>
+                  <div className='info'>
+                    {index === 0 ? (
+                      <label
+                        htmlFor='dose'
+                        className='lg:text-[1.5rem] font-bold lg:ml-4 flex flex-nowrap'
+                      >
+                        Dose
+                        <span className='valid-req font-normal italic text-gray-400 lg:text-[1rem] text-[0.7rem]'>
+                          {" "}
+                          required*
+                        </span>
+                      </label>
+                    ) : null}
+                    <SearchableDropdown
+                      options={drugSuggestions.doses}
+                      idx={index}
+                      length={formData.length}
+                      id='dose'
+                      name='dose'
+                      selectedVal={element.dose}
+                      edit={edit[index]}
+                      onDropdownChange={(e) =>
+                        handleDropdownChange(index, e, "dose").then(
+                          findRxCUI(index)
+                        )
+                      }
+                    ></SearchableDropdown>
+                  </div>
+                  <div className='info freq flex flex-col'>
+                    {index === 0 ? (
+                      <label
+                        htmlFor='freq'
+                        className='flex flex-nowrap lg:text-[1.5rem] font-bold lg:ml-4 align-top'
+                      >
+                        Frequency
+                        {
+                          <span className='valid-opt italic text-gray-400 lg:text-[1rem] font-normal text-[0.7rem]'>
+                            {" "}
+                            optional
+                          </span>
+                        }
+                      </label>
+                    ) : null}
+                    <div className='inputContainer flex flex-grow'>
+                      <input
+                        className='freqInput flex self-center border-[0.05rem] border-gray-400 rounded-full py-2 pl-5 w-full text-[1.2rem] '
+                        type='text'
+                        id='freq'
+                        name='frequency'
+                        value={element.frequency || ""}
+                        placeholder='frequency'
+                        onChange={(e) => handleChange(index, e)}
+                        edit={edit[index]}
+                      />
+                    </div>
+                  </div>
+                  {index || formData.length > 1 ? (
+                    <div className='info flex flex-grow content-center'>
+                      <button
+                        type='button'
+                        className=' ml-2 self-center btnX'
+                        onClick={() => removeFormData(index)}
+                      >
+                        {`x`}
+                      </button>
+                      <button
+                        type='button'
+                        className='btnX self-center ml-2'
+                        onClick={() => handleEditClick(index)}
+                      >
+                        Edit
+                      </button>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            );
+          })}
+          <div className='btnContainer flex flex-col justify-evenly gap-2 mb-5 '>
+            <button
+              className='btn py-2 border-dashed border-2 border-opacity-20  border-gray-600 bg-gray-100 text-gray-700 font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-gray-50 hover:shadow-2xl focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg transition duration-150 ease-in-out text-[1rem]'
+              type='button'
+              onClick={() => addFormFields()}
             >
-              <div className="info">
-                {index === 0 ? (
-                  <label
-                    htmlFor="drug"
-                    className="lg:text-[1.5rem] font-bold lg:ml-4"
-                  >
-                    Drug
-                    {
-                      <span className="valid-req italic text-gray-400 text-[0.7rem] lg:text-[1rem] lg:font-normal">
-                        {" "}
-                        required*
-                      </span>
-                    }
-                  </label>
-                ) : null}
-                <SearchableDropdown
-                  options={drugSuggestions.drugNames}
-                  idx={index}
-                  id="drug"
-                  name="drug"
-                  selectedVal={element.drug}
-                  length={formData.length}
-                  onDropdownChange={(e) =>
-                    handleDropdownChange(index, e, "drug")
-                  }
-                ></SearchableDropdown>
-              </div>
-              <div className="info">
-                {index === 0 ? (
-                  <label
-                    htmlFor="dose"
-                    className="lg:text-[1.5rem] font-bold lg:ml-4"
-                  >
-                    Dose
-                    <span className="valid-req font-normal italic text-gray-400 lg:text-[1rem] text-[0.7rem]">
-                      {" "}
-                      required*
-                    </span>
-                  </label>
-                ) : null}
-                <SearchableDropdown
-                  options={drugSuggestions.doses}
-                  idx={index}
-                  length={formData.length}
-                  id="dose"
-                  name="dose"
-                  selectedVal={element.dose}
-                  onDropdownChange={(e) =>
-                    handleDropdownChange(index, e, "dose").then(
-                      findRxCUI(index)
-                    )
-                  }
-                ></SearchableDropdown>
-              </div>
-              <div className="info freq flex flex-col">
-                {index === 0 ? (
-                  <label
-                    htmlFor="freq"
-                    className="lg:text-[1.5rem] font-bold lg:ml-4 align-top"
-                  >
-                    Frequency
-                    {
-                      <span className="valid-opt italic text-gray-400 lg:text-[1rem] font-normal text-[0.7rem]">
-                        {" "}
-                        optional
-                      </span>
-                    }
-                  </label>
-                ) : null}
-                <div className="inputContainer flex flex-grow">
-                  <input
-                    className="freqInput flex self-center border-[0.05rem] border-gray-400 rounded-full py-2 pl-5 w-full text-[1.2rem] "
-                    type="text"
-                    id="freq"
-                    name="frequency"
-                    value={element.frequency || ""}
-                    placeholder="frequency"
-                    onChange={(e) => handleChange(index, e)}
-                    // disabled={index === formData.length - 1 ? false : true}
-                  />
-                </div>
-              </div>
-              {index || formData.length > 1 ? (
-                <div className="info flex flex-grow content-center">
-                  <button
-                    type="button"
-                    className="btnX"
-                    onClick={() => removeFormData(index)}
-                  >
-                    {/* {`Delete ${formData[index].drug}`} */}
-                    {`x`}
-                  </button>
-                </div>
-              ) : null}
-            </div>
-          );
-        })}
-        <div className="btnContainer flex flex-col justify-evenly gap-2 mb-5 ">
-          <button
-            className="btn py-2 border-dashed border-2 border-opacity-20  border-gray-600 bg-gray-100 text-gray-700 font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-gray-50 hover:shadow-2xl focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg transition duration-150 ease-in-out text-[1rem]"
-            type="button"
-            onClick={() => addFormFields()}
-          >
-            Add Drug
-          </button>
-          <input
-            className="btn py-2 border-2 bg-black border-black text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md focus:bg-gray-800-700 focus:shadow-lg hover:shadow-xl focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg transition duration-150 ease-in-out md:text-[1rem]"
-            type="submit"
-            value="Check Interactions"
-            onClick={handleSubmit}
-          />
-        </div>
-      </form>
+              {type === "interactioncheck" ? "Add Drug" : "+ Drug"}
+            </button>
+            <input
+              className='btn py-2 border-2 bg-black border-black text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md focus:bg-gray-800-700 focus:shadow-lg hover:shadow-xl focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg transition duration-150 ease-in-out md:text-[1rem]'
+              type='submit'
+              value={
+                type === "interactioncheck"
+                  ? "Check Interactions"
+                  : "Add to Medication Journal"
+              }
+              onClick={handleSubmit}
+            />
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
