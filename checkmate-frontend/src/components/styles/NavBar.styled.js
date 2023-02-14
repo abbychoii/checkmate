@@ -24,20 +24,20 @@ export default function Navbar({ user, handleSignOut, setUser }) {
             Home
           </a>
           <a
-            href='http://checkmate.herokuapp.com/about'
+            href='https://checkmate.herokuapp.com/about'
             className='ml-8 inline-flex items-center justify-center bg-white text-black px-4 py-2 text-base font-medium hover:text-purple-400 hover:rotate-12 sm:text-sm font-groteskreg lg:text-base'
           >
             About
           </a>
           <a
-            href='http://checkmate.herokuapp.com/interactions'
+            href='https://checkmate.herokuapp.com/interactions'
             className='ml-8 inline-flex max-w-[6rem] flex-wrap items-center justify-center bg-white text-black px-4 py-2 text-base font-medium hover:text-purple-400 hover:-rotate-12 sm:text-sm font-groteskreg lg:text-base'
           >
             Interactions CheckMate
           </a>
           {user ? (
             <a
-              href='http://checkmate.herokuapp.com/profile'
+              href='https://checkmate.herokuapp.com/profile'
               className='bg-transparent text-black ml-8 items-center justify-center  hover:rotate-12'
             >
               <img
