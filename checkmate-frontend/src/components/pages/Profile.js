@@ -57,6 +57,9 @@ function Profile({ user, handleSignOut, getInteractions, profileData }) {
         }
         setUserMedList(newMeds);
       })
+      .then(() => {
+        fetchAllMeds();
+      })
       .catch((error) => {
         console.log(error);
       });
