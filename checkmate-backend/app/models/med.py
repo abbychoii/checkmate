@@ -11,11 +11,15 @@ class Med(db.Model):
 
     def to_dict(self):
         med_dict = {
-            "med_id": self.id,
-            "med_name": db.Column(db.String),
-            "rxcui": db.Column(db.String),
-            "dose": db.Column(db.String),
-            "frequency": db.Column(db.String)
+            "med_id": self.med_id,
+            "med_name": self.med_name,
+            "rxcui":self.rxcui,
+            "dose": self.dose,
+            "frequency": self.frequency
         }
-
         return med_dict
+    
+    @classmethod
+    def from_dict(cls, request):
+        med = cls(med_name=request["med_name"], rxcui=request["rxcui"], dose=request["dose"], frequency=request["frequency"])
+        return med
