@@ -102,6 +102,13 @@ function App() {
 
   const handleSignOut = (e) => {
     setUser("");
+    setProfileData({
+      rxCUIs: [""],
+      interactions: [""],
+      doses: [""],
+      drugs: [""],
+      frequencies: [""],
+    });
     window.localStorage.setItem("checkMateUser", false);
     document.getElementById("signInDiv").hidden = false;
   };
