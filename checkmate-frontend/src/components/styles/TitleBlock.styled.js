@@ -21,7 +21,7 @@ const TitleBlock = () => {
           <br />{" "}
           <a
             className='bg-transparent hover:bg-transparent'
-            href='http://localhost:3000/interactions'
+            href='https://checkmate.herokuapp.com/interactions'
           >
             <button className='bg-yellow-400 hover:bg-yellow-400 text-white font-bold py-2 px-4 border-b-4 border-yellow-700 hover:border-yellow-500 rounded-full w-fit self-center my-5 hover:animate-bounce'>
               Go to Interactions CheckMate

@@ -3,7 +3,7 @@ export default function Navbar({ user, handleSignOut, setUser }) {
     <div className='min-w-fit max-w-full px-6 bg-white'>
       <div className='flex items-center justify-between border-b-2 border-gray-100 py-4 md:justify-start md:space-x-10'>
         <div className='flex justify-start lg:w-0 lg:flex-1'>
-          <a href='https://checkmate.herokuapp.com' className='bg-transparent'>
+          <a href='https://checkmate.herokuapp.com/' className='bg-transparent'>
             <svg
               viewBox='0 0 366 366'
               fill='fill-black'
