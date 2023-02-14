@@ -70,7 +70,7 @@ padding: 8px 10px;
 
 }
 .dropdown .selected-value input:disabled {
-    background-color: rgba(51, 51, 51, 0.232);
+    background-color:#BABABA;
     fill-opacity: .1;
     font-style: italic;
 }

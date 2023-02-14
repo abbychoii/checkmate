@@ -1,10 +1,10 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import SearchableDropdown from "./SearchableDropdown";
 import "./AddDrugForm.css";
 
-const AddDrugForm = ({ getInteractions, type }) => {
+const AddDrugForm = ({ getInteractions, type, addMedsToMedList }) => {
   const [formData, setFormData] = useState([
     {
       drug: "",
@@ -22,7 +22,16 @@ const AddDrugForm = ({ getInteractions, type }) => {
     only: false,
   });
 
-  const [edit, setEdit] = useState([false]);
+  const [edit, setEdit] = useState([true]);
+
+  useEffect(() => {
+    setDrugSuggestions({
+      drugNames: [""],
+      doses: [""],
+      rxCUIs: [""],
+      only: false,
+    });
+  }, [edit]);
 
   const handleChange = async (i, e) => {
     let newFormData = [...formData];
@@ -96,7 +105,9 @@ const AddDrugForm = ({ getInteractions, type }) => {
         rxCUIs: [""],
         only: false,
       });
-      setEdit([...edit, true]);
+      const newEdit = [...edit, true];
+      newEdit[index] = false;
+      setEdit(newEdit);
     } else {
       alert("Drug Name and Dose are Required");
     }
@@ -109,6 +120,9 @@ const AddDrugForm = ({ getInteractions, type }) => {
 
     let newEdit = [...edit];
     newEdit.splice(i, 1);
+    if (newEdit.includes(true) === false) {
+      newEdit[newEdit.length - 1] = true;
+    }
     setEdit(newEdit);
   };
 
@@ -131,8 +145,11 @@ const AddDrugForm = ({ getInteractions, type }) => {
         newFormData.push({ ...formData[idx], drug: drugName });
       }
       console.log(newFormData);
-      getInteractions(newFormData);
-
+      if (type === "interactioncheck") {
+        getInteractions(newFormData, type);
+      } else if (type === "profilemedupdate") {
+        addMedsToMedList(newFormData);
+      }
       setFormData([
         {
           drug: "",
@@ -171,9 +188,44 @@ const AddDrugForm = ({ getInteractions, type }) => {
     return e;
   };
 
-  // const handleEditClick = (i) => {
-  //   for (let i in )
-  // };
+  const handleEditClick = (i) => {
+    console.log("handleEditClick called");
+    console.log(edit[i]);
+    const last = edit.length - 1;
+    const newEdit = [...edit];
+    newEdit[i] = !newEdit[i];
+    newEdit[last] = !newEdit[last];
+    // console.log(newEdit);
+    setEdit(newEdit);
+    console.log(newEdit);
+  };
+
+  const showEditButton = (i) => {
+    if (edit.slice(0, -1).includes(true)) {
+      if (edit[i]) {
+        return true;
+      }
+      return false;
+    } else {
+      if (i === formData.length - 1) {
+        // last item and edit = true, don't show the edit button
+        return false;
+      } else {
+        return true;
+      }
+    }
+  };
+  const showDelButton = (i) => {
+    if (edit.slice(0, -1).includes(true)) {
+      if (edit[i]) {
+        return false;
+      }
+      return true;
+    } else if (i > 0 || formData.length - 1) {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <div>
@@ -251,7 +303,6 @@ const AddDrugForm = ({ getInteractions, type }) => {
                         Frequency
                         {
                           <span className='valid-opt italic text-gray-400 lg:text-[1rem] font-normal text-[0.7rem]'>
-                            {" "}
                             optional
                           </span>
                         }
@@ -259,19 +310,23 @@ const AddDrugForm = ({ getInteractions, type }) => {
                     ) : null}
                     <div className='inputContainer flex flex-grow'>
                       <input
-                        className='freqInput flex self-center border-[0.05rem] border-gray-400 rounded-full py-2 pl-5 w-full text-[1.2rem] '
+                        className='freqInput flex self-center border-[0.05rem] border-gray-400 rounded-full py-2 pl-5 w-full text-[1.2rem] disabled:bg-[#BABABA] bg-opacity-20 placeholder:italic placeholder:text-[1rem]'
                         type='text'
                         id='freq'
                         name='frequency'
                         value={element.frequency || ""}
                         placeholder='frequency'
                         onChange={(e) => handleChange(index, e)}
-                        edit={edit[index]}
+                        // edit={edit[index]}
+                        disabled={
+                          edit[index] || formData.length === 1 ? false : true
+                        }
                       />
                     </div>
                   </div>
-                  {index || formData.length > 1 ? (
-                    <div className='info flex flex-grow content-center'>
+
+                  <div className='info flex flex-grow content-center'>
+                    {showDelButton(index) ? (
                       <button
                         type='button'
                         className=' ml-2 self-center btnX'
@@ -279,37 +334,46 @@ const AddDrugForm = ({ getInteractions, type }) => {
                       >
                         {`x`}
                       </button>
+                    ) : null}
+                    {showEditButton(index) ? (
                       <button
                         type='button'
                         className='btnX self-center ml-2'
                         onClick={() => handleEditClick(index)}
                       >
-                        Edit
+                        {edit[index] ? "Done" : "Edit"}
                       </button>
-                    </div>
-                  ) : null}
+                    ) : null}
+                  </div>
                 </div>
               </div>
             );
           })}
           <div className='btnContainer flex flex-col justify-evenly gap-2 mb-5 '>
-            <button
-              className='btn py-2 border-dashed border-2 border-opacity-20  border-gray-600 bg-gray-100 text-gray-700 font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-gray-50 hover:shadow-2xl focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg transition duration-150 ease-in-out text-[1rem]'
-              type='button'
-              onClick={() => addFormFields()}
-            >
-              {type === "interactioncheck" ? "Add Drug" : "+ Drug"}
-            </button>
-            <input
-              className='btn py-2 border-2 bg-black border-black text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md focus:bg-gray-800-700 focus:shadow-lg hover:shadow-xl focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg transition duration-150 ease-in-out md:text-[1rem]'
-              type='submit'
-              value={
-                type === "interactioncheck"
-                  ? "Check Interactions"
-                  : "Add to Medication Journal"
-              }
-              onClick={handleSubmit}
-            />
+            {type === "interactioncheck" ? (
+              <button
+                className='btn py-2 border-dashed border-2 border-opacity-20  border-gray-600 bg-gray-100 text-gray-700 font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-gray-50 hover:shadow-2xl focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg transition duration-150 ease-in-out text-[1rem]'
+                type='button'
+                onClick={() => addFormFields()}
+              >
+                Add Drug
+              </button>
+            ) : null}
+            {type === "interactioncheck" ? (
+              <input
+                className='btn py-2 border-2 bg-black border-black text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md focus:bg-gray-800-700 focus:shadow-lg hover:shadow-xl focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg transition duration-150 ease-in-out md:text-[1rem]'
+                type='submit'
+                value={"Check Interactions"}
+                onClick={handleSubmit}
+              />
+            ) : (
+              <input
+                className='btn py-2 border-2 bg-black border-black text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md focus:bg-gray-800-700 focus:shadow-lg hover:shadow-xl focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg transition duration-150 ease-in-out md:text-[1rem]'
+                type='submit'
+                value='Add to Medication Journal'
+                onClick={handleSubmit}
+              />
+            )}
           </div>
         </form>
       </div>

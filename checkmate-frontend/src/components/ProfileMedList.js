@@ -7,7 +7,7 @@ const ProfileMedList = ({ user, medData, deleteMed }) => {
       <ProfileMedCard
         key={med.med_id}
         med_id={med.med_id}
-        drug={med.med_name}
+        drug={med.drug}
         dose={med.dose}
         frequency={med.frequency}
         deleteMed={deleteMed}
@@ -15,9 +15,9 @@ const ProfileMedList = ({ user, medData, deleteMed }) => {
     );
   });
   return (
-    <div className=''>
+    <div>
       {/* <div> {user.given_name}'s Med List </div> */}
-      <div className='grid grid-flow-col-dense auto-rows-max md:auto-rows-min'>
+      <div className='flex flex-row flex-wrap py-5 justify-center lg:px-10'>
         {medList}
       </div>
     </div>

@@ -3,7 +3,7 @@ import React from "react";
 // const Med = [
 //   {
 //     id: 1,
-//     user: "Jane Doe",
+//     user: "Jane Doe"
 //     medication: "Zocor",
 //     dose: "X mg",
 //     frequency: "2x daily",
@@ -12,8 +12,8 @@ import React from "react";
 
 const ProfileMedCard = ({ med_id, drug, dose, frequency, deleteMed }) => {
   return (
-    <div className='med-card content-center p-4 sm:w-1/2 lg:w-1/3 w-full hover:scale-105 duration-500 m-1'>
-      <div className=' flex min-h-[14rem] min-w-[14rem] items-center justify-between p-4 rounded-lg bg-white shadow-yellow-200 shadow-lg hover:shadow-2xl hover:shadow-yellow-200'>
+    <div className='flex med-card content-center p-4 hover:scale-105 duration-500 m-1'>
+      <div className=' flex w-fit min-h-[14rem] xl:min-w-[20rem] max-w-[20rem] items-center justify-between p-4 rounded-lg bg-white shadow-yellow-200 shadow-lg hover:shadow-2xl hover:shadow-yellow-200'>
         <div>
           <h4 className='flex break-all text-gray-900 font-bold'>
             {drug.charAt(0).toUpperCase() + drug.slice(1)}
@@ -23,7 +23,7 @@ const ProfileMedCard = ({ med_id, drug, dose, frequency, deleteMed }) => {
           </h3>
           <p className='text-sm font-semibold text-gray-400'>{frequency}</p>
           <button
-            className='deletecard-btn text-sm mt-6 px-4 py-2 bg-yellow-400 text-white rounded-lg  tracking-wider hover:bg-yellow-300 outline-none'
+            className='deletecard-btn text-sm mt-6 px-4 py-2 bg-yellow-400 text-white rounded-lg  tracking-wider hover:bg-yellow-300 outline-none m-1'
             onClick={() => {
               deleteMed(med_id);
             }}

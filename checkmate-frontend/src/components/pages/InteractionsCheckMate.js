@@ -13,7 +13,7 @@ function Interactions({
   currentData,
 }) {
   const [banner, setBanner] = useState(Boolean(user));
-  console.log(banner);
+  // console.log(banner);
 
   // useEffect(() => {
   //   /* global google */

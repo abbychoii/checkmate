@@ -38,14 +38,12 @@ const SearchableDropdown = ({
         <div className='selected-value'>
           <input
             ref={inputRef}
-            className='h-8'
+            className='h-8 placeholder:italic placeholder:text-[1rem] '
             type='text'
             value={getDisplayValue()}
             name='searchTerm'
-            disabled={idx === length - 1 ? false : true}
+            disabled={edit || length === 1 ? false : true}
             onChange={(e) => {
-              console.log(e);
-              console.log(e.target.value);
               onDropdownChange(e);
             }}
             onClick={toggle}
@@ -56,7 +54,7 @@ const SearchableDropdown = ({
         <div className={`arrow ${isOpen ? "open" : ""}`}></div>
       </div>
       <div className={`options ${isOpen ? "open" : ""}`}>
-        {idx === length - 1
+        {edit
           ? options.map((option, index) => {
               return (
                 <div

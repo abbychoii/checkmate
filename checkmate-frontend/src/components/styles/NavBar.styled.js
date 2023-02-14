@@ -56,7 +56,9 @@ export default function Navbar({ user, handleSignOut, setUser }) {
               Sign Out
             </button>
           ) : (
-            <div className='mx-10' id='signInDiv'></div>
+            <div className='mx-10'>
+              <div id='signInDiv'></div>
+            </div>
           )}
         </div>
         <div></div>
