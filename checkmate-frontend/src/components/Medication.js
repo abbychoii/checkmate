@@ -79,7 +79,7 @@ function Medication({ currentData, idx }) {
             />
           </Disclosure.Button>
           <Disclosure.Panel className='px-10 pt-4 pb-2 text-base lg:text-lg text-black  bg-white rounded-xl border-2 border-yellow-200 flex flex-col flex-grow sm:self-center text-ellipsis sm:text-sm '>
-            {currentData.drugs[idx]}
+            <h3>{currentData.drugs[idx]}</h3>
 
             <p>Dose: {currentData.doses[idx]}</p>
             <br />
