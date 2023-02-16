@@ -34,16 +34,8 @@ const OncHigh = ({ interactions, id }) => {
           <h3>Interaction Pair: </h3>
         </li>
         <ul>
-          <li key={`${id}-oh-drug1`}>
-            <a className='hover:bg-red-100 hover:text-red-700' href={drug1Link}>
-              {drug1Name}
-            </a>
-          </li>
-          <li key={`${id}-oh-drug2`}>
-            <a className='hover:bg-red-100 hover:text-red-700' href={drug2Link}>
-              {drug2Name}
-            </a>
-          </li>
+          <li key={`${id}-oh-drug1`}>{drug1Name}</li>
+          <li key={`${id}-oh-drug2`}>{drug2Name}</li>
         </ul>
         <br />
         <li key={`${id}-oh-severity`}>
