@@ -9,13 +9,17 @@ const OncHigh = ({ interactions, id }) => {
   const drug1Name =
     interaction.minConcept[0].name.charAt(0).toUpperCase() +
     interaction.minConcept[0].name.slice(1);
-  const drug1Link = drug1.url;
+  const drug1Link =
+    data.fullInteractionType[id].interactionPair[0].interactionConcept[0]
+      .sourceConceptItem.url;
   const drug2 =
     interaction.interactionPair[0].interactionConcept[1].sourceConceptItem;
   const drug2Name =
     interaction.minConcept[1].name.charAt(0).toUpperCase() +
     interaction.minConcept[1].name.slice(1);
-  const drug2Link = drug2.url;
+  const drug2Link =
+    data.fullInteractionType[id].interactionPair[0].interactionConcept[1]
+      .sourceConceptItem.url;
   const description = interaction.interactionPair[0].description;
   const severity = interaction.interactionPair[0].severity;
 
@@ -23,7 +27,7 @@ const OncHigh = ({ interactions, id }) => {
     <div>
       <ul
         key={`${id}-oh`}
-        className="interactionPairs border-4 border-red-500 px-7 py-7 rounded-[0.5rem]"
+        className='interactionPairs border-4 border-red-500 px-7 py-7 rounded-[0.5rem]'
         id={id}
       >
         <li key={`${id}-oh-header`}>
@@ -31,12 +35,12 @@ const OncHigh = ({ interactions, id }) => {
         </li>
         <ul>
           <li key={`${id}-oh-drug1`}>
-            <a className="hover:bg-red-100 hover:text-red-700" href={drug1Link}>
+            <a className='hover:bg-red-100 hover:text-red-700' href={drug1Link}>
               {drug1Name}
             </a>
           </li>
           <li key={`${id}-oh-drug2`}>
-            <a className="hover:bg-red-100 hover:text-red-700" href={drug2Link}>
+            <a className='hover:bg-red-100 hover:text-red-700' href={drug2Link}>
               {drug2Name}
             </a>
           </li>
@@ -44,8 +48,8 @@ const OncHigh = ({ interactions, id }) => {
         <br />
         <li key={`${id}-oh-severity`}>
           {" "}
-          <h5 className="inline-flex mr-7"> ⚠️ </h5>
-          <h2 className="inline-flex">Severity: {severity}</h2>
+          <h5 className='inline-flex mr-7'> ⚠️ </h5>
+          <h2 className='inline-flex'>Severity: {severity}</h2>
         </li>{" "}
         <br />
         <div>

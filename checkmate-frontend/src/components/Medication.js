@@ -20,7 +20,7 @@ function Medication({ currentData, idx }) {
                   .interactionConcept[0].sourceConceptItem.url
               }
             >
-              <h3>{`${currentData.drugs[idx]} rxCUI: ${currentData.rxCUIs[idx]}`}</h3>
+              <h3>{`${currentData.drugs[idx]}`}</h3>
             </a>
           );
         } else if (data.fullInteractionType[i].minConcept[1].rxcui === rxCUI) {
@@ -28,7 +28,7 @@ function Medication({ currentData, idx }) {
             <a
               href={
                 data.fullInteractionType[i].interactionPair[0]
-                  .interactionConcept[1].sourceConceptItem.url
+                  .interactionConcept[0].sourceConceptItem.url
               }
             >
               <h3>{`${currentData.drugs[idx]} rxCUI: ${currentData.rxCUIs[idx]}`}</h3>
@@ -79,7 +79,7 @@ function Medication({ currentData, idx }) {
             />
           </Disclosure.Button>
           <Disclosure.Panel className='px-10 pt-4 pb-2 text-base lg:text-lg text-black  bg-white rounded-xl border-2 border-yellow-200 flex flex-col flex-grow sm:self-center text-ellipsis sm:text-sm '>
-            <h3>{`${currentData.drugs[idx]}`}</h3>
+            {getDrugTitle()}
 
             <p>Dose: {currentData.doses[idx]}</p>
             <br />
