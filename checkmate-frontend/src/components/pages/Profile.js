@@ -23,7 +23,7 @@ function Profile({ user, handleSignOut, getInteractions, profileData }) {
                 drug: med.med_name,
                 rxCUI: med.rxcui,
                 dose: med.dose,
-                frequency: med.frequency,
+                frequency: med.frequency
               };
             });
             setUserMedList(medListAPICopy);
@@ -75,7 +75,7 @@ function Profile({ user, handleSignOut, getInteractions, profileData }) {
           med_name: med.drug,
           rxcui: med.rxCUI,
           dose: med.dose,
-          frequency: med.frequency,
+          frequency: med.frequency
         }
       )
       .then((response) => {
@@ -87,7 +87,7 @@ function Profile({ user, handleSignOut, getInteractions, profileData }) {
             drug: med.name,
             rxCUI: med.rxcui,
             dose: med.dose,
-            frequency: med.frequency,
+            frequency: med.frequency
           };
           newMeds.push(newMed);
 
@@ -102,11 +102,11 @@ function Profile({ user, handleSignOut, getInteractions, profileData }) {
   return (
     <div>
       <Navbar user={user} handleSignOut={handleSignOut} />
-      <div className='bg-tetris2 min-h-screen h-max lg:px-52 py-[5.5rem] px-16'>
+      <div className="bg-tetris2 min-h-screen h-max lg:px-52 py-[5.5rem] px-16">
         {user ? (
           <div>
-            <div className='bg-white  h-auto rounded-[3rem] md:rounded-[3rem] lg:rounded-[3rem] xl:rounded-[5rem] md:flex md:flex-col items-center justify-center border-spacing-12 border-[20px] mt-[0.75rems] text-center mb-10 border-yellow-200 shadow-yellow-400  text-lg'>
-              <p className='align-middle justify-center lg:text-[1.5rem] font-bold flex flex-nowrap py-10'>
+            <div className="bg-white  h-auto rounded-[3rem] md:rounded-[3rem] lg:rounded-[3rem] xl:rounded-[5rem] md:flex md:flex-col items-center justify-center border-spacing-12 border-[20px] mt-[0.75rems] text-center mb-10 border-yellow-200 shadow-yellow-400  text-lg">
+              <p className="align-middle justify-center lg:text-[1.5rem] font-bold flex flex-nowrap py-10">
                 {user.name}'s Medication List
               </p>
               <ProfileMedList
@@ -116,15 +116,17 @@ function Profile({ user, handleSignOut, getInteractions, profileData }) {
               ></ProfileMedList>
             </div>
             <AddDrugForm
-              type='profilemedupdate'
+              type="profilemedupdate"
               getInteractions={getInteractions}
               addMedsToMedList={addMedsToMedList}
             />
-            <MedicationData currentData={profileData}></MedicationData>
+            {userMedList.length < 2 ? null : (
+              <MedicationData currentData={profileData}></MedicationData>
+            )}
           </div>
         ) : (
-          <div className='bg-white  h-auto rounded-[3rem] md:rounded-[3rem] lg:rounded-[3rem] xl:rounded-[5rem] md:flex md:flex-col items-center justify-center border-spacing-12 border-[20px] mt-20 text-center mb-10 border-yellow-200 shadow-yellow-400  text-lg'>
-            <p className='align-middle justify-center lg:text-[1.5rem] font-bold flex flex-nowrap pt-10'>
+          <div className="bg-white  h-auto rounded-[3rem] md:rounded-[3rem] lg:rounded-[3rem] xl:rounded-[5rem] md:flex md:flex-col items-center justify-center border-spacing-12 border-[20px] mt-20 text-center mb-10 border-yellow-200 shadow-yellow-400  text-lg">
+            <p className="align-middle justify-center lg:text-[1.5rem] font-bold flex flex-nowrap pt-10">
               "Please Log In to see your medication list."
             </p>
           </div>
